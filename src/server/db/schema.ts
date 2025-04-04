@@ -18,7 +18,7 @@ import {
  */
 export const createTable = pgTableCreator((name) => `legal-sync_${name}`);
 
-export const user = createTable("user", {
+export const users = createTable("user", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
@@ -28,7 +28,7 @@ export const user = createTable("user", {
   updatedAt: timestamp("updated_at").notNull(),
 });
 
-export const session = createTable("session", {
+export const sessions = createTable("session", {
   id: text("id").primaryKey(),
   expiresAt: timestamp("expires_at").notNull(),
   token: text("token").notNull().unique(),
@@ -38,16 +38,16 @@ export const session = createTable("session", {
   userAgent: text("user_agent"),
   userId: text("user_id")
     .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
+    .references(() => users.id, { onDelete: "cascade" }),
 });
 
-export const account = createTable("account", {
+export const accounts = createTable("account", {
   id: text("id").primaryKey(),
   accountId: text("account_id").notNull(),
   providerId: text("provider_id").notNull(),
   userId: text("user_id")
     .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
+    .references(() => users.id, { onDelete: "cascade" }),
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
   idToken: text("id_token"),
