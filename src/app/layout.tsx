@@ -1,9 +1,8 @@
+import { Providers } from "@/components/providers";
 import "@/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
-
-import { TRPCReactProvider } from "@/trpc/react";
 
 export const metadata: Metadata = {
   title: "Legal Sync",
@@ -26,7 +25,7 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" sizes="any" type="image/svg+" />
       </head>
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
