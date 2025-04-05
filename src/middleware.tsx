@@ -2,13 +2,18 @@ import { getSessionCookie } from "better-auth/cookies";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  const sessionCookie = getSessionCookie(request);
+
   if (request.nextUrl.pathname.startsWith("/auth")) {
-    return NextResponse.next();
+    return sessionCookie
+      ? NextResponse.redirect(new URL("/dashboard", request.url))
+      : NextResponse.next();
   }
 
-  const sessionCookie = getSessionCookie(request);
-  if (request.nextUrl.pathname === "/" && sessionCookie) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  if (request.nextUrl.pathname === "/") {
+    return sessionCookie
+      ? NextResponse.redirect(new URL("/dashboard", request.url))
+      : NextResponse.next();
   }
 
   if (!sessionCookie) {

@@ -10,10 +10,10 @@ import { Copy, Paperclip, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-interface Message {
+type Message = {
   role: "ai" | "me";
   content: string;
-}
+};
 
 export function ChatForm() {
   const [input, setInput] = useState("");

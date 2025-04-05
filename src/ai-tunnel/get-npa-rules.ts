@@ -1,8 +1,7 @@
-import type { AIResponse } from "../@types/ai-response";
+import type { AIResponse } from "@/types/ai-response";
 import { client } from "./setup";
 import { headers } from "next/headers";
 import { auth } from "@/server/auth";
-import { db } from "@/server/db";
 
 export async function GetNpaRules(ts: string): Promise<AIResponse[]> {
   const session = await auth.api.getSession({ headers: await headers() });
