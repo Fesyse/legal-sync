@@ -1,4 +1,4 @@
-import type { AIResponse } from "./ai-types";
+import type { AIResponse } from "../@types/ai-response";
 import { client } from "./setup";
 
 export async function GetNpaRules(ts: string): Promise<AIResponse[]> {
