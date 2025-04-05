@@ -2,7 +2,6 @@
 
 import * as React from "react";
 
-import { NavUser } from "@/components/dashboard/sidebar/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -16,6 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { RiGeminiFill } from "react-icons/ri";
+import { NavUser } from "./nav-user";
 import { sidebarNav } from "./sidebar";
 
 export function AppMainSidebar({
@@ -26,7 +26,7 @@ export function AppMainSidebar({
   );
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
