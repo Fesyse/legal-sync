@@ -1,15 +1,15 @@
-import { TRPCReactProvider } from "@/trpc/react";
+"use client";
+
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { ModeToggle } from "../mode-toggle";
+import { TRPCReactProvider } from "@/trpc/react";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <TRPCReactProvider>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         {children}
-        <div className="fixed top-4 right-4">
-          <ModeToggle />
-        </div>
+        <Toaster />
       </ThemeProvider>
     </TRPCReactProvider>
   );
