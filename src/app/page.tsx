@@ -17,7 +17,7 @@ export default function Home() {
         description="Проверьте своё ТЗ на соответствие нормативно-правовым актам"
       />
 
-      <div className="min-w-xl">
+      <div className="w-full max-w-xl">
         <NPAForm />
       </div>
     </main>
