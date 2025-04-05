@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { authClient } from "@/lib/auth-client";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export function DashboardNavUser() {
   const { isMobile } = useSidebar();
@@ -48,6 +49,13 @@ export function DashboardNavUser() {
                 <UserInfo />
               </div>
             </DropdownMenuLabel>
+            <DropdownMenuItem asChild>
+              <ModeToggle
+                expanded
+                className="dark:bg-transparent"
+                iconClassName={"mr-0.5"}
+              />
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <UserLogout className="gap-2.5" />
           </DropdownMenuContent>

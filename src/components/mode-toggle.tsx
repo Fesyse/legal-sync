@@ -15,12 +15,14 @@ type ThemeToggleProps = {
   expanded?: boolean;
   iconSize?: number;
   className?: string;
+  iconClassName?: string;
 };
 
 export function ModeToggle({
   iconSize = 16,
   expanded = false,
   className,
+  iconClassName,
 }: ThemeToggleProps) {
   const { setTheme } = useTheme();
 
@@ -46,6 +48,7 @@ export function ModeToggle({
               {
                 "text-muted-foreground mr-3": expanded,
               },
+              iconClassName,
             )}
           />
           <MoonIcon
@@ -56,6 +59,7 @@ export function ModeToggle({
               {
                 "text-muted-foreground mr-3": expanded,
               },
+              iconClassName,
             )}
           />
           {expanded ? "Поменять тему" : null}
