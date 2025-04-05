@@ -3,12 +3,12 @@
 
 import { sql } from "drizzle-orm";
 import {
-  boolean,
   index,
   pgTableCreator,
   text,
   timestamp,
   boolean,
+  integer,
 } from "drizzle-orm/pg-core";
 
 /**
