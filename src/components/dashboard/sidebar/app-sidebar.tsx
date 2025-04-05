@@ -3,7 +3,7 @@
 import { ArchiveX, Command, File, Inbox, Send, Trash2 } from "lucide-react";
 import * as React from "react";
 
-import { NavUser } from "@/components/nav-user";
+import { NavUser } from "@/components/dashboard/sidebar/nav-user";
 import {
   Sidebar,
   SidebarContent,
