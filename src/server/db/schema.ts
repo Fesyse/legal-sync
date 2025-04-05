@@ -54,6 +54,7 @@ export const technicalSpecification = createTable("technical_specification", {
     .array()
     .notNull()
     .default(sql`ARRAY[]::text[]`),
+  description: text("description").notNull(),
   createdAt: timestamp("created_at").$defaultFn(() => new Date()),
   status: varchar("role", { length: 255, enum: STATUS }).notNull(),
   updatedAt: timestamp("updated_at", {
