@@ -23,6 +23,7 @@ export const env = createEnv({
     AUTH_GOOGLE_CLIENT_SECRET: z.string(),
     AUTH_VK_CLIENT_ID: z.string(),
     AUTH_VK_CLIENT_SECRET: z.string(),
+    AITUNELL_API_KEY: z.string(),
   },
 
   /**
@@ -45,6 +46,7 @@ export const env = createEnv({
     AUTH_GOOGLE_CLIENT_SECRET: process.env.AUTH_GOOGLE_CLIENT_SECRET,
     AUTH_VK_CLIENT_ID: process.env.AUTH_VK_CLIENT_ID,
     AUTH_VK_CLIENT_SECRET: process.env.AUTH_VK_CLIENT_SECRET,
+    AITUNELL_API_KEY: process.env.AITUNELL_API_KEY,
 
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
