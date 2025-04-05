@@ -1,6 +1,8 @@
 import { AnimatedTitle } from "@/components/animated-title";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Link } from "lucide-react";
+import { NPAForm } from "./npa-form";
 
 export default function Home() {
   return (
@@ -16,11 +18,7 @@ export default function Home() {
       />
 
       <div className="min-w-xl">
-        <Card>
-          <CardHeader>
-            <CardTitle>Legal Sync</CardTitle>
-          </CardHeader>
-        </Card>
+        <NPAForm />
       </div>
     </main>
   );
