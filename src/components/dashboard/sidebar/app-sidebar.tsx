@@ -55,7 +55,7 @@ export function AppMainSidebar({
                     <ul className="flex flex-col gap-2">
                       {!!block.items?.length
                         ? block.items.map((item) => (
-                            <SidebarMenuItem key={item.title}>
+                            <SidebarMenuItem key={item.url}>
                               <SidebarMenuButton
                                 asChild
                                 tooltip={{

@@ -1,5 +1,15 @@
 "use client";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   DndContext,
   KeyboardSensor,
@@ -33,6 +43,7 @@ import {
   ChevronDownIcon,
   LoaderIcon,
   MoreVerticalIcon,
+  Trash,
 } from "lucide-react";
 import * as React from "react";
 
@@ -57,7 +68,9 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { TechnicalSpecificationSchema } from "@/lib/schemas";
+import { api } from "@/trpc/react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
   {
@@ -146,26 +159,50 @@ const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
 
   {
     id: "actions",
-    cell: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="text-muted-foreground data-[state=open]:bg-muted flex size-8"
-            size="icon"
-          >
-            <MoreVerticalIcon />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="min-w-48">
-          <DropdownMenuItem>Редактировать</DropdownMenuItem>
-          <DropdownMenuItem>Скачать в PDF</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Удалить</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
+    cell: ({ row }) => {
+      const utils = api.useUtils();
+      const { mutate: remove } = api.technicalSpecification.delete.useMutation({
+        onSuccess: () => {
+          utils.technicalSpecification.getAll.invalidate();
+          toast.success("Техническое задание(-я) успешно удалено(-ы)");
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      });
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="text-muted-foreground data-[state=open]:bg-muted flex size-8"
+              size="icon"
+            >
+              <MoreVerticalIcon />
+              <span className="sr-only">Открыть меню</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="min-w-48">
+            <DropdownMenuItem asChild>
+              <Link href={`/dashboard/task/${row.original.id}`}>
+                Редактировать
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Скачать в PDF{" "}
+              <span className="text-foreground/60 text-xs">(в разработке)</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              onClick={() => remove({ ids: [row.original.id] })}
+            >
+              Удалить
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];
 
@@ -175,6 +212,9 @@ export function DataTable({
   data: TechnicalSpecificationSchema[];
 }) {
   const [data, setData] = React.useState(initialData);
+  React.useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -222,7 +262,16 @@ export function DataTable({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
-
+  const utils = api.useUtils();
+  const { mutate: remove } = api.technicalSpecification.delete.useMutation({
+    onSuccess: () => {
+      utils.technicalSpecification.getAll.invalidate();
+      toast.success("Техническое задание(-я) успешно удалено(-ы)");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (active && over && active.id !== over.id) {
@@ -365,9 +414,41 @@ export function DataTable({
           </DndContext>
         </div>
         <div className="flex items-center justify-between px-4">
-          <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
+          <div className="text-muted-foreground hidden flex-1 items-center gap-2 text-sm lg:flex">
             {table.getFilteredSelectedRowModel().rows.length} из{" "}
             {table.getFilteredRowModel().rows.length} выбрано
+            {!!table.getFilteredSelectedRowModel().rows.length && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <button type="button">
+                    <Trash size={16} />
+                  </button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Вы уверены?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Это действие приведет к безвозратному удалению ваших ТЗ ,
+                      вы точно хотите это сделать?
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Отмена</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() =>
+                        remove({
+                          ids: table
+                            .getFilteredSelectedRowModel()
+                            .rows.map((r) => r.original.id),
+                        })
+                      }
+                    >
+                      Продолжить
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
           </div>
         </div>
       </TabsContent>

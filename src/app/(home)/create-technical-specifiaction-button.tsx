@@ -6,9 +6,11 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export function CreateTechnicalSpecificationButton() {
+  const utils = api.useUtils();
   const { mutate: create } = api.technicalSpecification.create.useMutation({
     onSuccess: (data) => {
       toast.success("Шаблон технического задания успешно создан!");
+      utils.technicalSpecification.getAll.invalidate();
       router.push(`/dashboard/task/${data.id}`);
     },
     onError: (error) => {
