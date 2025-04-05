@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
-import { FileSearch } from "lucide-react";
 import Link from "next/link";
 import { LoginForm } from "./login-form";
 import { SocialButtons } from "./social-buttons";
+import { Icons } from "@/components/ui/icons";
 
 type LoginFormProps = React.ComponentProps<"div"> & {
   type: "sign-in" | "sign-up";
@@ -25,11 +25,11 @@ export function Login({ className, type, ...props }: LoginFormProps) {
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <FileSearch size={24} />
+                <Icons.logo />
               </div>
               <span className="sr-only">Legal Sync</span>
             </Link>
-            <h1 className="text-xl font-bold">Welcome to Legal Sync</h1>
+            <h1 className="text-xl font-bold">Добро пожаловать в Legal Sync</h1>
             <div className="text-center text-sm">
               {type === "sign-in" ? "Еще нет аккаунта? " : "Уже есть аккаунт? "}
 
@@ -52,8 +52,10 @@ export function Login({ className, type, ...props }: LoginFormProps) {
           <SocialButtons />
         </div>
         <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-          By clicking continue, you agree to our{" "}
-          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+          Нажав «Продолжить» вы соглашаетесь с нашими
+          <br />
+          <a href="#">Правилами использования</a> и{" "}
+          <a href="#">Политикой конфиденциальности</a>.
         </div>
       </div>
     </div>

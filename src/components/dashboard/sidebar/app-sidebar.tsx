@@ -1,13 +1,12 @@
 "use client";
 
-import * as React from "react";
-
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -16,7 +15,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RiGeminiFill } from "react-icons/ri";
-import { NavUser } from "./nav-user";
+import { DashboardNavUser } from "./nav-user";
 import { useSidebarNav } from "./sidebar";
 
 export function AppMainSidebar({
@@ -48,17 +47,9 @@ export function AppMainSidebar({
             <SidebarMenu className="flex flex-col gap-7">
               {navMain.map((block) => {
                 return (
-                  <div key={block.title} className="flex flex-col gap-5">
-                    <SidebarMenuItem
-                      className="text-foreground/70 font-medium"
-                      key={block.title}
-                    >
-                      <SidebarMenuButton className="px-2.5 text-xs md:px-2">
-                        <block.icon />
-                        {block.title}
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <ul className="flex flex-col gap-3">
+                  <div key={block.title} className="flex flex-col">
+                    <SidebarGroupLabel>{block.title}</SidebarGroupLabel>
+                    <ul className="flex flex-col gap-2">
                       {!!block.items?.length ? (
                         block.items.map((item) => (
                           <SidebarMenuItem key={item.title}>
@@ -92,12 +83,7 @@ export function AppMainSidebar({
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={{
-            name: "shadcn",
-            email: "m@example.com",
-          }}
-        />
+        <DashboardNavUser />
       </SidebarFooter>
     </Sidebar>
   );
