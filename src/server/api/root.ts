@@ -1,4 +1,5 @@
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
+import { npaRouter } from "./routers/npa";
 import { technicalSpecificationRouter } from "./routers/technical-specification";
 
 /**
@@ -8,6 +9,7 @@ import { technicalSpecificationRouter } from "./routers/technical-specification"
  */
 export const appRouter = createTRPCRouter({
   technicalSpecification: technicalSpecificationRouter,
+  npa: npaRouter,
 });
 
 // export type definition of API

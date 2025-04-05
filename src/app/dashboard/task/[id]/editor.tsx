@@ -13,7 +13,7 @@ export const Editor = ({ value, setValue }: EditorProps) => {
     <MinimalTiptapEditor
       value={value}
       onChange={setValue}
-      className="w-full"
+      className="w-full border-none"
       editorContentClassName="p-5"
       output="html"
       placeholder="Enter your description..."

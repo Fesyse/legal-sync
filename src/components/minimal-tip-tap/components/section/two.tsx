@@ -1,8 +1,4 @@
-import * as React from "react"
-import type { Editor } from "@tiptap/react"
-import type { FormatAction } from "../../types"
-import type { toggleVariants } from "@/components/ui/toggle"
-import type { VariantProps } from "class-variance-authority"
+import type { toggleVariants } from "@/components/ui/toggle";
 import {
   CodeIcon,
   DotsHorizontalIcon,
@@ -11,8 +7,12 @@ import {
   StrikethroughIcon,
   TextNoneIcon,
   UnderlineIcon,
-} from "@radix-ui/react-icons"
-import { ToolbarSection } from "../toolbar-section"
+} from "@radix-ui/react-icons";
+import type { Editor } from "@tiptap/react";
+import type { VariantProps } from "class-variance-authority";
+import * as React from "react";
+import type { FormatAction } from "../../types";
+import { ToolbarSection } from "../toolbar-section";
 
 type TextStyleAction =
   | "bold"
@@ -20,16 +20,16 @@ type TextStyleAction =
   | "underline"
   | "strikethrough"
   | "code"
-  | "clearFormatting"
+  | "clearFormatting";
 
 interface TextStyle extends FormatAction {
-  value: TextStyleAction
+  value: TextStyleAction;
 }
 
 const formatActions: TextStyle[] = [
   {
     value: "bold",
-    label: "Bold",
+    label: "Жирный",
     icon: <FontBoldIcon className="size-5" />,
     action: (editor) => editor.chain().focus().toggleBold().run(),
     isActive: (editor) => editor.isActive("bold"),
@@ -40,7 +40,7 @@ const formatActions: TextStyle[] = [
   },
   {
     value: "italic",
-    label: "Italic",
+    label: "Курсив",
     icon: <FontItalicIcon className="size-5" />,
     action: (editor) => editor.chain().focus().toggleItalic().run(),
     isActive: (editor) => editor.isActive("italic"),
@@ -51,7 +51,7 @@ const formatActions: TextStyle[] = [
   },
   {
     value: "underline",
-    label: "Underline",
+    label: "Подчеркнутый текст",
     icon: <UnderlineIcon className="size-5" />,
     action: (editor) => editor.chain().focus().toggleUnderline().run(),
     isActive: (editor) => editor.isActive("underline"),
@@ -62,7 +62,7 @@ const formatActions: TextStyle[] = [
   },
   {
     value: "strikethrough",
-    label: "Strikethrough",
+    label: "Зачеркнутый текст",
     icon: <StrikethroughIcon className="size-5" />,
     action: (editor) => editor.chain().focus().toggleStrike().run(),
     isActive: (editor) => editor.isActive("strike"),
@@ -73,7 +73,7 @@ const formatActions: TextStyle[] = [
   },
   {
     value: "code",
-    label: "Code",
+    label: "Код",
     icon: <CodeIcon className="size-5" />,
     action: (editor) => editor.chain().focus().toggleCode().run(),
     isActive: (editor) => editor.isActive("code"),
@@ -84,7 +84,7 @@ const formatActions: TextStyle[] = [
   },
   {
     value: "clearFormatting",
-    label: "Clear formatting",
+    label: "Убрать форматирование",
     icon: <TextNoneIcon className="size-5" />,
     action: (editor) => editor.chain().focus().unsetAllMarks().run(),
     isActive: () => false,
@@ -93,12 +93,12 @@ const formatActions: TextStyle[] = [
       !editor.isActive("codeBlock"),
     shortcuts: ["mod", "\\"],
   },
-]
+];
 
 interface SectionTwoProps extends VariantProps<typeof toggleVariants> {
-  editor: Editor
-  activeActions?: TextStyleAction[]
-  mainActionCount?: number
+  editor: Editor;
+  activeActions?: TextStyleAction[];
+  mainActionCount?: number;
 }
 
 export const SectionTwo: React.FC<SectionTwoProps> = ({
@@ -115,14 +115,14 @@ export const SectionTwo: React.FC<SectionTwoProps> = ({
       activeActions={activeActions}
       mainActionCount={mainActionCount}
       dropdownIcon={<DotsHorizontalIcon className="size-5" />}
-      dropdownTooltip="More formatting"
-      dropdownClassName="w-8"
+      dropdownTooltip="Форматирование"
+      dropdownClassName="w-6"
       size={size}
       variant={variant}
     />
-  )
-}
+  );
+};
 
-SectionTwo.displayName = "SectionTwo"
+SectionTwo.displayName = "SectionTwo";
 
-export default SectionTwo
+export default SectionTwo;

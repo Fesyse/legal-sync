@@ -31,6 +31,9 @@ export const npaSchema = z.object({
   name: z.string(),
   description: z.string(),
   sentensePart: z.string(),
+  new: z.boolean().default(false), // анонс или нет
+  recommendations: z.string(),
+  id: z.string(),
 });
 export const TYPE = ["announced", "default"] as const;
 export const technicalSpecificationSchema = z.object({

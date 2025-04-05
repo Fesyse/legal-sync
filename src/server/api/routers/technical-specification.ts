@@ -26,6 +26,7 @@ export const technicalSpecificationRouter = createTRPCRouter({
         id,
         userId: ctx.session?.user?.id!,
         npa: input.npa.map((npa) => npa.name),
+        description: "Здесь вы можете написать ваше техническое задание",
       });
       return {
         success: true,
@@ -70,5 +71,23 @@ export const technicalSpecificationRouter = createTRPCRouter({
         code: 204,
         message: "Техническое задание(-я) успешно удалено(-ы)",
       };
+    }),
+  getById: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { id } = input;
+      const response = await ctx.db.query.technicalSpecification.findFirst({
+        where: eq(technicalSpecification.id, id),
+      });
+
+      if (!response) {
+        throw new Error("Техническое задание не найдено");
+      }
+
+      return response;
     }),
 });

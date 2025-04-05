@@ -1,12 +1,12 @@
-import type { AIResponse } from "@/types/ai-response";
-import { client } from "./setup";
-import { headers } from "next/headers";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { technicalSpecification } from "@/server/db/schema";
+import type { AIResponse } from "@/types/ai-response";
 import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
+import { client } from "./setup";
 
-export async function GetNpaRules(id_ts: number): Promise<AIResponse[]> {
+export async function GetNpaRules(id_ts: string): Promise<AIResponse[]> {
   const session = await auth.api.getSession({ headers: await headers() });
 
   if (!session?.user) {
@@ -34,7 +34,7 @@ export async function GetNpaRules(id_ts: number): Promise<AIResponse[]> {
       },
       {
         role: "user",
-        content: ts.technicalSpecification,
+        content: ts.title,
       },
     ],
     model: "gemini-2.0-flash-001",

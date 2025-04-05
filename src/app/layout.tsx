@@ -18,7 +18,8 @@ const montserrat = Montserrat({
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  modal,
+}: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
     <html
       suppressHydrationWarning
@@ -30,7 +31,10 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" sizes="any" type="image/svg+" />
       </head>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          {modal}
+          {children}
+        </Providers>
       </body>
     </html>
   );

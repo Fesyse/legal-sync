@@ -140,17 +140,17 @@ const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
         {row.original.status === "done" ? (
           <>
             <CheckCircle2Icon className="text-green-500 dark:text-green-400" />
-            Выполнен
+            НПА найдены
           </>
         ) : row.original.status === "error" ? (
           <>
             <Ban className="text-red-500" />
-            Ошибка
+            Ошибка НПА не найдены
           </>
         ) : (
           <>
             <LoaderIcon />
-            Процесс в разработке
+            ТЗ в разработке
           </>
         )}
       </Badge>

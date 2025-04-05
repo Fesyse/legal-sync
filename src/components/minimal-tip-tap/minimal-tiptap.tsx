@@ -1,17 +1,17 @@
 import * as React from "react";
 import "./styles/index.css";
 
-import type { Content, Editor } from "@tiptap/react";
-import type { UseMinimalTiptapEditorProps } from "./hooks/use-minimal-tiptap";
-import { EditorContent } from "@tiptap/react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import type { Content, Editor } from "@tiptap/react";
+import { EditorContent } from "@tiptap/react";
+import { LinkBubbleMenu } from "./components/bubble-menu/link-bubble-menu";
+import { MeasuredContainer } from "./components/measured-container";
+import { SectionFour } from "./components/section/four";
 import { SectionOne } from "./components/section/one";
 import { SectionTwo } from "./components/section/two";
-import { SectionFour } from "./components/section/four";
-import { LinkBubbleMenu } from "./components/bubble-menu/link-bubble-menu";
+import type { UseMinimalTiptapEditorProps } from "./hooks/use-minimal-tiptap";
 import { useMinimalTiptapEditor } from "./hooks/use-minimal-tiptap";
-import { MeasuredContainer } from "./components/measured-container";
 
 export interface MinimalTiptapProps
   extends Omit<UseMinimalTiptapEditorProps, "onUpdate"> {
@@ -72,7 +72,7 @@ export const MinimalTiptapEditor = React.forwardRef<
       name="editor"
       ref={ref}
       className={cn(
-        "border-input focus-within:border-primary flex h-auto min-h-72 w-full flex-col rounded-md border shadow-sm",
+        "border-input focus-within:border-primary flex h-auto min-h-[100vh] w-full flex-col rounded-md border shadow-sm",
         className,
       )}
     >

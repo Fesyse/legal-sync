@@ -6,5 +6,5 @@ export default async function EditorPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  return <TechnicalSpecificationDetail />;
+  return <TechnicalSpecificationDetail id={id} />;
 }
