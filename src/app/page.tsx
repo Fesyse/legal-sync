@@ -1,8 +1,8 @@
 import { AnimatedTitle } from "@/components/animated-title";
 import { Header } from "@/components/ui/header";
 import { Link } from "lucide-react";
-import { NPAForm } from "./npa-form";
 import { GetNpaRules } from "@/ai-tunnel/get-npa-rules";
+import { NPAForm } from "./(home)/npa-form";
 
 export default async function Home() {
   // const npa =
