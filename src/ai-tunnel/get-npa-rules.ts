@@ -3,14 +3,27 @@ import { client } from "./setup";
 import { headers } from "next/headers";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
+import { technicalSpecification } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
-export async function GetNpaRules(ts: string): Promise<AIResponse[]> {
+export async function GetNpaRules(id_ts: number): Promise<AIResponse[]> {
   const session = await auth.api.getSession({ headers: await headers() });
 
   if (!session?.user) {
     throw new Error("Not authorized");
   }
-  console.log(session.user);
+
+  const ts_object = await db
+    .select()
+    .from(technicalSpecification)
+    .where(eq(technicalSpecification.id, id_ts));
+  if (!ts_object.length) {
+    throw new Error("Technical specification not found");
+  }
+  const ts = ts_object[0];
+  if (!ts) {
+    throw new Error("Technical specification not found");
+  }
 
   const chatResult = await client.chat.completions.create({
     messages: [
@@ -21,7 +34,7 @@ export async function GetNpaRules(ts: string): Promise<AIResponse[]> {
       },
       {
         role: "user",
-        content: ts,
+        content: ts.technicalSpecification,
       },
     ],
     model: "gemini-2.0-flash-001",
