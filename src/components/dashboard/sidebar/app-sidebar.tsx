@@ -1,102 +1,102 @@
+"use client";
+
 import * as React from "react";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
 } from "@/components/ui/sidebar";
-import { VersionSwitcher } from "@/components/dashboard/sidebar/version-switcher";
+import Link from "next/link";
+import { RiGeminiFill } from "react-icons/ri";
+import { NavUser } from "./nav-user";
+import { sidebarNav } from "./sidebar";
 
-type DataType = {
-  versions: string[];
-  navMain: {
-    title: string;
-    url: string;
-    items: {
-      title: string;
-      url: string;
-      isActive?: boolean;
-    }[];
-  }[];
-};
-
-// This is sample data.
-const data: DataType = {
-  versions: [
-    "gemini-2.0-flash-001",
-    "gemini-2.0-flash-lite-001",
-    "gemini-flash-1.5-8b",
-    "gemini-pro-1.5",
-  ],
-  navMain: [
-    {
-      title: "Основное",
-      url: "/",
-      items: [
-        {
-          title: "Главная",
-          url: "/",
-        },
-        {
-          title: "Войти",
-          url: "/auth/sign-in",
-        },
-      ],
-    },
-    {
-      title: "Начало работы",
-      url: "/dashboard/getting-started",
-      items: [
-        {
-          title: "Что такое НПА?",
-          url: "/dashboard/getting-started#npa",
-        },
-        {
-          title: "Как пользоваться сервисом?",
-          url: "/dashboard/getting-started#usage",
-        },
-      ],
-    },
-  ],
-};
-
-export async function AppSidebar({
+export function AppMainSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const [activeItem, setActiveItem] = React.useState(
+    sidebarNav.navMain[0]?.items[0],
+  );
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]!}
-        />
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
+              <Link href="/">
+                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                  <RiGeminiFill className="size-4" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">Legal Sync</span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {data.navMain.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item?.isActive}>
-                      <a href={item.url}>{item.title}</a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+        <SidebarGroup>
+          <SidebarGroupContent className="px-1.5 md:px-0">
+            <SidebarMenu className="flex flex-col gap-7">
+              {sidebarNav.navMain.map((block) => {
+                return (
+                  <div key={block.title} className="flex flex-col gap-5">
+                    <SidebarMenuItem
+                      className="text-foreground/70 font-medium"
+                      key={block.title}
+                    >
+                      <SidebarMenuButton className="px-2.5 text-xs md:px-2">
+                        <block.icon />
+                        {block.title}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <ul className="flex flex-col gap-3">
+                      {block.items.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                          <SidebarMenuButton
+                            asChild
+                            tooltip={{
+                              children: item.title,
+                              hidden: false,
+                            }}
+                            onClick={() => {
+                              setActiveItem(item);
+                            }}
+                            isActive={activeItem?.title === item.title}
+                            className="px-2.5 md:px-2"
+                          >
+                            <Link href={item.url}>
+                              <item.icon />
+                              <span>{item.title}</span>
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarRail />
+      <SidebarFooter>
+        <NavUser
+          user={{
+            name: "shadcn",
+            email: "m@example.com",
+          }}
+        />
+      </SidebarFooter>
     </Sidebar>
   );
 }
