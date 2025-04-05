@@ -3,11 +3,12 @@
 
 import { sql } from "drizzle-orm";
 import {
-  boolean,
   index,
   pgTableCreator,
   text,
   timestamp,
+  boolean,
+  integer,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -23,17 +24,64 @@ export const users = createTable("user", {
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull(),
+  tokens: integer("tokens").notNull().default(2000),
   image: text("image"),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at", {
+    mode: "date",
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
+});
+
+export const technicalSpecification = createTable("thread", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  technicalSpecification: text("technical_specification").notNull(),
+  npa: text("npa").notNull(),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at", {
+    mode: "date",
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
+});
+
+export const aiMessages = createTable("ai_messages", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  technicalSpecification_id: integer("technical_specification_id")
+    .notNull()
+    .references(() => technicalSpecification.id, { onDelete: "cascade" }),
+  question: text("question").notNull(),
+  answer: text("answer").notNull(),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at", {
+    mode: "date",
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
 });
 
 export const sessions = createTable("session", {
   id: text("id").primaryKey(),
   expiresAt: timestamp("expires_at").notNull(),
   token: text("token").notNull().unique(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at", {
+    mode: "date",
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
   ipAddress: text("ip_address"),
   userAgent: text("user_agent"),
   userId: text("user_id")
@@ -55,8 +103,14 @@ export const accounts = createTable("account", {
   refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
   scope: text("scope"),
   password: text("password"),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at", {
+    mode: "date",
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
 });
 
 export const verification = createTable("verification", {
@@ -81,27 +135,3 @@ export const posts = createTable(
   }),
   (t) => [index("name_idx").on(t.name)],
 );
-
-// export type AIResponse = {
-//   name: string; // название нпа
-//   description: string; // описание нпа
-//   sentensePart: string; // часть тз кооторая отвечает за  этот нпа
-//   recommendations: string[]; // рекомендации к ТЗ (какой закон лучше применить и тд.)
-// };
-
-// export const threads = createTable("thread", {
-//   id: text("id").primaryKey(),
-//   userId: text("user_id")
-//     .notNull()
-//     .references(() => users.id, { onDelete: "cascade" }),
-//   technicalSpecification: text("ts").notNull(),
-//   message: AIResponse,
-//   createdAt: timestamp("created_at", {
-//     mode: "date",
-//     withTimezone: true,
-//   }).default(sql(CURRENT_TIMESTAMP)),
-//   updatedAt: timestamp("updated_at", {
-//     mode: "date",
-//     withTimezone: true,
-//   }).$onUpdateFn(() => new Date()),
-// });

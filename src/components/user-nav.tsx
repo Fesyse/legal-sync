@@ -1,9 +1,6 @@
 "use client";
 
-import { LayoutGrid, LogIn, LogOut } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { ModeToggle } from "@/components/mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,9 +18,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ModeToggle } from "@/components/mode-toggle";
-import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
+import { LayoutGrid, LogIn, LogOut } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type UserNavProps = {
   className?: string;
@@ -53,15 +53,15 @@ export function UserNav({ className }: UserNavProps) {
                 variant="outline"
                 className={cn("relative h-8 w-8 rounded-full", className)}
               >
-                <Avatar className="h-8 w-8">
+                <Avatar className="h-4 w-4">
                   <AvatarImage
                     className={cn("h-full w-full", {
                       "dark:invert": !user?.image,
                     })}
                     src={user?.image ?? "/user.svg"}
                     alt="Avatar"
-                    width={32}
-                    height={32}
+                    width={24}
+                    height={24}
                   />
                   <AvatarFallback>
                     {(user?.name ?? "гость").slice(0, 2).toUpperCase()}
@@ -95,7 +95,7 @@ export function UserNav({ className }: UserNavProps) {
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
             <Link href="/dashboard" className="flex items-center">
               <LayoutGrid className="text-muted-foreground mr-3 h-4 w-4" />
-              Дашборд
+              Панель управления
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>

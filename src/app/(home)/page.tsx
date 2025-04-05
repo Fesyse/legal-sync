@@ -11,7 +11,7 @@ export default function HomePage({ className }: HomeProps) {
   return (
     <main
       className={cn(
-        "bg-noise flex min-h-screen flex-col items-center justify-center",
+        "flex min-h-screen flex-col items-center justify-center",
         className,
       )}
     >
