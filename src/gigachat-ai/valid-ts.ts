@@ -1,7 +1,7 @@
 import { client } from "./setup";
 
 export async function Req() {
-  client
+  await client
     .chat({
       messages: [{ role: "user", content: "Привет, как дела?" }],
     })
