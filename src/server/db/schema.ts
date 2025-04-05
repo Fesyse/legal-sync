@@ -36,6 +36,38 @@ export const users = createTable("user", {
   }).$onUpdateFn(() => new Date()),
 });
 
+export const threads = createTable("thread", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  ts: text("ts").notNull(),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at", {
+    mode: "date",
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
+});
+
+export const messages = createTable("message", {
+  id: text("id").primaryKey(),
+  chatId: text("thread_id")
+    .notNull()
+    .references(() => threads.id, { onDelete: "cascade" }),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at", {
+    mode: "date",
+    withTimezone: true,
+  }).default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at", {
+    mode: "date",
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
+});
+
 export const sessions = createTable("session", {
   id: text("id").primaryKey(),
   expiresAt: timestamp("expires_at").notNull(),
