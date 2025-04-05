@@ -1,6 +1,7 @@
 import type { TechnicalSpecificationSchema } from "@/lib/schemas";
 import {
   ClipboardCheck,
+  Edit2,
   File,
   History,
   Home,
@@ -27,7 +28,7 @@ export const useSidebarNav = () => {
           },
           // Страница на которой отображается ваше ТЗ и НПА-шки
           {
-            title: "История",
+            title: "Технические задания",
             url: "/dashboard/history",
             icon: History,
           },

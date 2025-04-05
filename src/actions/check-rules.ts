@@ -2,15 +2,9 @@
 
 import { z } from "zod";
 
-const formSchema = z
-  .object({
-    techinfo: z.string().min(1),
-  })
-  .or(
-    z.object({
-      techinfoFile: z.instanceof(File),
-    }),
-  );
+const formSchema = z.object({
+  techinfo: z.string().min(1),
+});
 
 export const checkRules = async (formData: FormData) => {
   const formDataAsJSON = Object.fromEntries(formData.entries());

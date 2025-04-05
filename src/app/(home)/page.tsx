@@ -1,7 +1,8 @@
 import { AnimatedTitle } from "@/components/animated-title";
 import { Link } from "lucide-react";
-import { NPAForm } from "./npa-form";
+import NextLink from "next/link";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 type HomeProps = {
   className?: string;
@@ -25,8 +26,11 @@ export default function HomePage({ className }: HomeProps) {
         description="Проверьте своё ТЗ на соответствие нормативно-правовым актам"
       />
 
-      <div className="w-full max-w-xl">
-        <NPAForm />
+      <div className="flex items-center gap-3">
+        <Button variant="outline">Создать тз</Button>
+        <NextLink href={"/dashboard/history"}>
+          <Button variant="outline">Посмотреть историю</Button>
+        </NextLink>
       </div>
     </main>
   );

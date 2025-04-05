@@ -2,75 +2,35 @@
 
 import { checkRules } from "@/actions/check-rules";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Plus, Search, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Editor } from "./editor";
+import { type Content } from "@tiptap/react";
+import { db } from "@/server/db";
+import { technicalSpecification } from "@/server/db/schema";
 
-export const NPAForm = () => {
-  const [isUploadedFile, setIsUploadedFile] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+type NPAFormProps = {
+  content?: Content;
+};
+
+export const NPAForm = ({ content = "" }: NPAFormProps) => {
+  const [value, setValue] = useState<Content>(content);
+  const oSubmit = () => {};
 
   return (
-    <form action={checkRules}>
-      <div className="flex gap-2.5">
-        <div className="relative">
-          <Button
-            type="button"
-            size="icon"
-            variant="secondary"
-            className="bg-input/30 border-input relative mt-0.5 border"
-            onClick={() => {
-              inputRef.current?.click();
-            }}
-          >
-            <Plus />
-          </Button>
-
-          {isUploadedFile ? (
-            <Button
-              type="button"
-              className="absolute -top-2 -right-2 z-50 size-4"
-              size="icon"
-              variant="outline"
-              onClick={() => {
-                setIsUploadedFile(false);
-                if (inputRef.current) {
-                  inputRef.current.value = "";
-                }
-              }}
-            >
-              <X className="!size-3" />
-            </Button>
-          ) : null}
+    <form action={oSubmit} className="">
+      <div className="flex h-full flex-col gap-4">
+        <div className="h-full w-full">
+          <Editor value={value} setValue={setValue} />
         </div>
-        <Input
-          ref={inputRef}
-          type="file"
-          className="hidden"
-          name="techinfo-file"
-          onChange={(e) => {
-            if (e.target.value) {
-              setIsUploadedFile(true);
-            }
-          }}
-        />
 
-        {/* <Textarea
-          placeholder="Напишите свое тз здесь... Или же прикрепите файл"
-          className="max-h-40 min-h-10"
-          name="techinfo"
-        /> */}
-        <Editor />
-
-        <Button
-          size="icon"
-          variant="secondary"
-          className="bg-input/30 border-input mt-0.5 border"
-        >
-          <Search />
-        </Button>
+        <div className="items-left flex gap-3">
+          <Button type="submit" variant="outline">
+            Save
+          </Button>
+          <Button type="submit" variant="outline">
+            Получить НПА
+          </Button>
+        </div>
       </div>
     </form>
   );

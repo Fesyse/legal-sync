@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { type Content } from "@tiptap/react";
 import { MinimalTiptapEditor } from "@/components/minimal-tip-tap";
+import { type Content } from "@tiptap/react";
 
-export const Editor = () => {
-  const [value, setValue] = useState<Content>("");
+type EditorProps = {
+  value: Content | null;
+  setValue: (value: Content) => void;
+};
 
+export const Editor = ({ value, setValue }: EditorProps) => {
   return (
     <MinimalTiptapEditor
       value={value}

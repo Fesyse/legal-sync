@@ -2,6 +2,7 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { sql } from "drizzle-orm";
+import { init } from "@paralleldrive/cuid2";
 import {
   index,
   pgTableCreator,
@@ -11,6 +12,10 @@ import {
   integer,
 } from "drizzle-orm/pg-core";
 
+export const createCuid = init({
+  fingerprint: "legalsync",
+  length: 20,
+});
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
  * database instance for multiple projects.
@@ -37,7 +42,9 @@ export const users = createTable("user", {
 });
 
 export const technicalSpecification = createTable("thread", {
-  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createCuid()),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -47,6 +54,7 @@ export const technicalSpecification = createTable("thread", {
     mode: "date",
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
+  is_inProccess: boolean("is_inProccess").notNull().default(true),
   updatedAt: timestamp("updated_at", {
     mode: "date",
     withTimezone: true,
@@ -54,8 +62,10 @@ export const technicalSpecification = createTable("thread", {
 });
 
 export const aiMessages = createTable("ai_messages", {
-  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  technicalSpecification_id: integer("technical_specification_id")
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createCuid()),
+  technicalSpecification_id: text("technical_specification_id")
     .notNull()
     .references(() => technicalSpecification.id, { onDelete: "cascade" }),
   question: text("question").notNull(),
