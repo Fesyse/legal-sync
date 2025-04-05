@@ -33,7 +33,7 @@ export const useSidebarNav = () => {
           },
           {
             title: "Задать вопрос AI",
-            url: "/dashboard/question",
+            url: "/dashboard/ask",
             icon: RiQuestionLine,
           },
         ],

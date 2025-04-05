@@ -1,4 +1,4 @@
-import type { AIResponse } from "../@types/ai-response";
+import type { AIResponse } from "@/types/ai-response";
 import { client } from "./setup";
 import { headers } from "next/headers";
 import { auth } from "@/server/auth";
