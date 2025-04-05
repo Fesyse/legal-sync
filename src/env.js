@@ -23,6 +23,7 @@ export const env = createEnv({
     AUTH_GOOGLE_CLIENT_SECRET: z.string(),
     AUTH_VK_CLIENT_ID: z.string(),
     AUTH_VK_CLIENT_SECRET: z.string(),
+    AITUNELL_API_KEY: z.string(),
   },
 
   /**
@@ -30,9 +31,7 @@ export const env = createEnv({
    * isn't built with invalid env vars. To expose them to the client, prefix them with
    * `NEXT_PUBLIC_`.
    */
-  client: {
-    NEXT_PUBLIC_AITUNELL_API_KEY: z.string(),
-  },
+  client: {},
 
   /**
    * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
@@ -47,7 +46,7 @@ export const env = createEnv({
     AUTH_GOOGLE_CLIENT_SECRET: process.env.AUTH_GOOGLE_CLIENT_SECRET,
     AUTH_VK_CLIENT_ID: process.env.AUTH_VK_CLIENT_ID,
     AUTH_VK_CLIENT_SECRET: process.env.AUTH_VK_CLIENT_SECRET,
-    NEXT_PUBLIC_AITUNELL_API_KEY: process.env.NEXT_PUBLIC_GIGA_API_KEY,
+    AITUNELL_API_KEY: process.env.AITUNELL_API_KEY,
 
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
