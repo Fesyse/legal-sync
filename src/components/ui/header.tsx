@@ -10,11 +10,11 @@ export const Header = () => {
         <Icons.logo />
       </Link>
       <div className="flex items-center gap-2">
-        <Button size={"sm"} className="text-xs">
-          Войти
+        <Button asChild size={"sm"} className="text-xs">
+          <Link href={"/auth/sing-in"}>Войти</Link>
         </Button>
-        <Button size={"sm"} className="text-xs" variant="outline">
-          Зарегистрироваться
+        <Button asChild size={"sm"} className="text-xs" variant="outline">
+          <Link href={"/auth/sing-up"}>Зарегистрироваться</Link>
         </Button>
         <ModeToggle />
       </div>
