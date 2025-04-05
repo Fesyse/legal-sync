@@ -10,9 +10,7 @@
 }
 
 @theme {
-  --font-sans:
-    var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-montserrat: var(--font-montserrat);
 }
 
 @theme inline {
@@ -127,7 +125,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-noise bg-background text-foreground;
+    @apply bg-noise bg-background text-foreground font-montserrat;
   }
 }
 
