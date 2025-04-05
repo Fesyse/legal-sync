@@ -22,6 +22,7 @@ import {
 } from "@/lib/schemas";
 import { Loader } from "@/components/ui/loader";
 import { usePathname } from "next/navigation";
+import { toast } from "sonner";
 
 type AuthSchema = AuthSignInSchema | AuthSignUpSchema;
 
@@ -66,7 +67,7 @@ export function LoginForm() {
     }
 
     if (result.error) {
-      // TODO: add toast
+      toast.error(result.error.message);
     }
 
     setIsLoading(false);
