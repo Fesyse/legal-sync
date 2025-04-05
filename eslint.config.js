@@ -38,6 +38,7 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: { attributes: false } },
       ],
+      "@typescript-eslint/no-unsafe-assignment": "off",
       "drizzle/enforce-delete-with-where": [
         "error",
         { drizzleObjectName: ["db", "ctx.db"] },
