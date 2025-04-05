@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils";
-import { FileSearch } from "lucide-react";
 import Link from "next/link";
 import { LoginForm } from "./login-form";
 import { SocialButtons } from "./social-buttons";
-import { Icons } from "../ui/icons";
+import { Icons } from "@/components/ui/icons";
 
 type LoginFormProps = React.ComponentProps<"div"> & {
   type: "sign-in" | "sign-up";

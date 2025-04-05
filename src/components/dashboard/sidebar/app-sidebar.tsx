@@ -1,13 +1,12 @@
 "use client";
 
-import * as React from "react";
-
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -15,15 +14,12 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { RiGeminiFill } from "react-icons/ri";
-import { NavUser } from "./nav-user";
+import { DashboardNavUser } from "./nav-user";
 import { sidebarNav } from "./sidebar";
+import { useState } from "react";
 
-export function AppMainSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
-  const [activeItem, setActiveItem] = React.useState(
-    sidebarNav.navMain[0]?.items[0],
-  );
+export function AppMainSidebar(props: React.ComponentProps<typeof Sidebar>) {
+  const [activeItem, setActiveItem] = useState(sidebarNav.navMain[0]?.items[0]);
 
   return (
     <Sidebar {...props}>
@@ -49,17 +45,9 @@ export function AppMainSidebar({
             <SidebarMenu className="flex flex-col gap-7">
               {sidebarNav.navMain.map((block) => {
                 return (
-                  <div key={block.title} className="flex flex-col gap-5">
-                    <SidebarMenuItem
-                      className="text-foreground/70 font-medium"
-                      key={block.title}
-                    >
-                      <SidebarMenuButton className="px-2.5 text-xs md:px-2">
-                        <block.icon />
-                        {block.title}
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <ul className="flex flex-col gap-3">
+                  <div key={block.title} className="flex flex-col">
+                    <SidebarGroupLabel>{block.title}</SidebarGroupLabel>
+                    <ul className="flex flex-col gap-2">
                       {block.items.map((item) => (
                         <SidebarMenuItem key={item.title}>
                           <SidebarMenuButton
@@ -90,12 +78,7 @@ export function AppMainSidebar({
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={{
-            name: "shadcn",
-            email: "m@example.com",
-          }}
-        />
+        <DashboardNavUser />
       </SidebarFooter>
     </Sidebar>
   );
