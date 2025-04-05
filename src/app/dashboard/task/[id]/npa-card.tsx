@@ -118,10 +118,12 @@ export function NpaCard({
           </div>
           <div className="flex items-center gap-2">
             <Checkbox
-              checked={!!selected.find((k) => k === id)}
+              checked={!!selected.find((k) => k === name)}
               onCheckedChange={(value) =>
                 setSelected(
-                  value ? [...selected, id] : selected.filter((k) => k !== id),
+                  value
+                    ? [...selected, name]
+                    : selected.filter((k) => k !== name),
                 )
               }
               aria-label="select"

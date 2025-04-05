@@ -1,10 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { Skeletons } from "@/components/ui/skeletons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { api } from "@/trpc/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { RotateCcw, SquareX } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
+import { RxCross2 } from "react-icons/rx";
 import { NpaCard } from "./npa-card";
+import { SearchForm } from "./search-form";
+
+// const data = [
+//   {
+//     id: "1",
+//     name: "Право на проверку нормативных правовых актов",
+//     description:
+//       "Право на проверку нормативных правовых актов в соответствии с актами РФ и ФСТЭК от 25.01.2022 N 116-ФЗ «О проверке нормативных правовых актов»",
+//     sentensePart: "Право на проверку нормативных правовых актов",
+//     new: false,
+//     recommendations: "",
+//   },
+//   {
+//     id: "2",
+//     name: "Право на проверку нормативных правовых актов",
+//     description:
+//       "Право на проверку нормативных правовых актов в соответствии с актами РФ и ФСТЭК от 25.01.2022 N 116-ФЗ «О проверке нормативных правовых актов»",
+//     sentensePart: "Право на проверку нормативных правовых актов",
+//     new: false,
+//     recommendations: "",
+//   },
+// ];
 
 export function NpaList({
   id,
@@ -14,7 +43,7 @@ export function NpaList({
   setOpen: (open: string) => void;
 }) {
   const {
-    data: _,
+    data,
     isLoading: isInitialLoading,
     refetch,
     isRefetching,
@@ -24,42 +53,58 @@ export function NpaList({
       enabled: false,
     },
   );
+
   const isLoading = isRefetching || isInitialLoading;
-  const data = [
-    {
-      id: "1",
-      name: "Право на проверку нормативных правовых актов",
-      description:
-        "Право на проверку нормативных правовых актов в соответствии с актами РФ и ФСТЭК от 25.01.2022 N 116-ФЗ «О проверке нормативных правовых актов»",
-      sentensePart: "Право на проверку нормативных правовых актов",
-      new: false,
-      recommendations: "",
-    },
-    {
-      id: "2",
-      name: "Право на проверку нормативных правовых актов",
-      description:
-        "Право на проверку нормативных правовых актов в соответствии с актами РФ и ФСТЭК от 25.01.2022 N 116-ФЗ «О проверке нормативных правовых актов»",
-      sentensePart: "Право на проверку нормативных правовых актов",
-      new: false,
-      recommendations: "",
-    },
-  ];
+
   const [selected, setSelected] = useState<string[]>([]);
+  const { data: recommendations, refetch: getRecommendations } =
+    api.npa.getRecommendationsForTSByManyNPAs.useQuery(
+      { npas: selected, tsId: id },
+      { enabled: false },
+    );
+  //   // TODO: Подумать над получением рекомендаций из AI (Возможность выбрать документы, на соответствие которым пользователь
+  // хотел бы проверить ТЗ. )
+
   useEffect(() => {
     refetch();
   }, []);
 
   return (
-    <div className="flex w-full min-w-[800px] flex-col gap-5 p-4">
-      <button
-        className="flex w-full justify-end"
-        type="button"
-        onClick={() => setOpen("closed")}
-      >
-        <SquareX size={28} className="text-foreground/50" />
-      </button>
-      {/* <SearchForm /> */}
+    <div className="relative inline-flex min-h-[100vh] w-full min-w-[400px] flex-col gap-5 p-4 lg:min-w-[800px]">
+      <div className="flex w-full justify-between gap-5">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => {
+                  refetch();
+                }}
+                variant={"outline"}
+                size={"icon"}
+              >
+                <RotateCcw size={12} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Еще раз найти</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                variant={"outline"}
+                size={"icon"}
+                onClick={() => setOpen("closed")}
+              >
+                <RxCross2 size={28} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Закрыть</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+      <SearchForm />
       <AnimatePresence mode="wait">
         {isLoading && <Skeletons key="skeletons" />}
         {!!data?.length && !isLoading && (
@@ -104,6 +149,28 @@ export function NpaList({
                 <RotateCcw size={12} /> Еще раз
               </Button>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence mode="wait">
+        {!!selected?.length && (
+          <motion.div
+            exit={{ bottom: -100, opacity: 0, pointerEvents: "none" }}
+            initial={{ bottom: -100, opacity: 0, pointerEvents: "none" }}
+            key={"npa-list-footer"}
+            animate={{ bottom: 100, opacity: 1, pointerEvents: "auto" }}
+            transition={{ duration: 0.3 }}
+            className="absolute left-1/2 -translate-x-1/2"
+          >
+            <Button
+              type="button"
+              variant={"outline"}
+              onClick={() => {
+                getRecommendations();
+              }}
+            >
+              Проверить ТЗ на выбранные документы
+            </Button>
           </motion.div>
         )}
       </AnimatePresence>

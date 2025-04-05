@@ -45,24 +45,26 @@ export const TechnicalSpecificationDetail = ({
       </AnimatePresence>
       <Editor value={value} setValue={setValue} />
       <div className="fixed bottom-4 flex w-[calc(100%-var(--sidebar-width))] justify-center">
-        <Button
-          type="submit"
-          className="relative overflow-hidden"
-          variant="outline"
-          onClick={() => setOpen("open")}
-        >
-          Найти нормативные документы по тексту
-          <BorderBeam
-            size={40}
-            initialOffset={20}
-            className="from-transparent via-purple-500 to-transparent"
-            transition={{
-              type: "spring",
-              stiffness: 60,
-              damping: 20,
-            }}
-          />
-        </Button>
+        {open === "closed" && (
+          <Button
+            type="submit"
+            className="relative overflow-hidden"
+            variant="outline"
+            onClick={() => setOpen("open")}
+          >
+            Найти нормативные документы по тексту
+            <BorderBeam
+              size={40}
+              initialOffset={20}
+              className="from-transparent via-purple-500 to-transparent"
+              transition={{
+                type: "spring",
+                stiffness: 60,
+                damping: 20,
+              }}
+            />
+          </Button>
+        )}
       </div>
     </div>
   );

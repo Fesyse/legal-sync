@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { GetMoreRecommendations } from "@/ai-tunnel/get-more-recommendations";
+import { GetMoreRecommendationsByManyNpas } from "@/ai-tunnel/get-more-recommendations-by-many-npas";
 import { GetNpaDetails } from "@/ai-tunnel/get-npa-details";
 import { GetNpaRules } from "@/ai-tunnel/get-npa-rules";
 import {
@@ -42,5 +43,20 @@ export const npaRouter = createTRPCRouter({
       if (!data)
         return { code: "404", message: "Technical specification not found" };
       return await GetMoreRecommendations(npa, data?.description!);
+    }),
+  getRecommendationsForTSByManyNPAs: protectedProcedure
+    .input(
+      z.object({
+        npas: z.array(z.string()),
+        tsId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input: { npas, tsId } }) => {
+      const data = await ctx.db.query.technicalSpecification.findFirst({
+        where: eq(technicalSpecification.id, tsId),
+      });
+      if (!data)
+        return { code: "404", message: "Technical specification not found" };
+      return await GetMoreRecommendationsByManyNpas(npas, data?.description!);
     }),
 });
