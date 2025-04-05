@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus, Search, X } from "lucide-react";
 import { useRef, useState } from "react";
+import { Editor } from "./editor";
 
 export const NPAForm = () => {
   const [isUploadedFile, setIsUploadedFile] = useState(false);
@@ -56,11 +57,12 @@ export const NPAForm = () => {
           }}
         />
 
-        <Textarea
+        {/* <Textarea
           placeholder="Напишите свое тз здесь... Или же прикрепите файл"
           className="max-h-40 min-h-10"
           name="techinfo"
-        />
+        /> */}
+        <Editor />
 
         <Button
           size="icon"
