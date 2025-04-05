@@ -8,7 +8,6 @@ const httpsAgent = new Agent({
 export const client = new GigaChat({
   timeout: 600,
   model: "GigaChat",
-  credentials:
-    "NGViMzk4ZGMtNTdhYS00MWU1LTkzM2MtMDlmMGE0NmMyODZkOmQ5YjExMTYyLWRjMDEtNDhjZi1iOTRhLThlODE0M2YwMDQ5Yg==",
+  credentials: process.env.NEXT_PUBLIC_GIGA_API_KEY,
   httpsAgent: httpsAgent,
 });
