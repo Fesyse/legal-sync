@@ -21,6 +21,7 @@
     "ui": "pnpm dlx shadcn@canary"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^1.3.7",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
@@ -68,14 +69,12 @@
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.41.0",
     "framer-motion": "^12.6.3",
-    "gigachat": "^0.0.14",
     "lowlight": "^3.3.0",
     "lucide-react": "^0.487.0",
     "motion": "^12.6.3",
     "next": "^15.2.3",
     "next-themes": "^0.4.6",
     "openai": "^4.91.1",
-    "openai-edge": "^1.2.2",
     "postgres": "^3.4.4",
     "react": "^19.1.0",
     "react-dom": "^19.0.0",
@@ -88,7 +87,6 @@
     "sonner": "^2.0.3",
     "superjson": "^2.2.1",
     "tailwind-merge": "^3.1.0",
-    "tw-animate-css": "^1.2.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -105,6 +103,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.0.15",
+    "tw-animate-css": "^1.2.5",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.27.0"
   },

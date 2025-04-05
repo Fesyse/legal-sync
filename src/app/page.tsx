@@ -1,7 +1,6 @@
 import { AnimatedTitle } from "@/components/animated-title";
 import { Header } from "@/components/ui/header";
 import { Link } from "lucide-react";
-import { GetNpaRules } from "@/ai-tunnel/get-npa-rules";
 import { NPAForm } from "./(home)/npa-form";
 
 export default async function Home() {
@@ -9,7 +8,6 @@ export default async function Home() {
   //   "«Необходимо разработать систему для учета и обработки персональных данных пациентов. Система должна обеспечивать безопасность данных, соответствовать требованиям Федерального закона о защите персональных данных (ФЗ-152), а также соблюдать требования СанПиН и ГОСТов в сфере медицины. Внедрение системы должно обеспечить возможность контроля за качеством медицинских услуг и учета медицинских услуг в соответствии с законодательством».";
   // const data = await GetNpaRules(npa);
   // console.log(data);
-
   return (
     <>
       <Header />
