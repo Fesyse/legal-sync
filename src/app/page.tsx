@@ -1,8 +1,10 @@
+import { GetMoreRecommendations } from "@/ai-tunnel/get-more-recommendations";
+import { GetNpaDetails } from "@/ai-tunnel/get-npa-details";
+import { GetNpaRules } from "@/ai-tunnel/get-npa-rules";
 import { AnimatedTitle } from "@/components/animated-title";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "lucide-react";
-
-export default function Home() {
+export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
       <AnimatedTitle
