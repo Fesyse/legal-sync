@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname === "/auth/sign-in") {
+  if (request.nextUrl.pathname.startsWith("/auth")) {
     return NextResponse.next();
   }
 
