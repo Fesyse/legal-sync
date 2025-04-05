@@ -28,7 +28,7 @@ export const SocialButtons = () => {
             fill="currentColor"
           />
         </svg>
-        Continue with Google
+        Продолжить с Google
       </Button>
       <Button
         variant="outline"
@@ -58,7 +58,7 @@ export const SocialButtons = () => {
             fillRule="evenodd"
           />
         </svg>
-        Continue with VK
+        Продолжить с VK
       </Button>
     </div>
   );

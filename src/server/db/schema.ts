@@ -36,12 +36,13 @@ export const users = createTable("user", {
   }).$onUpdateFn(() => new Date()),
 });
 
-export const threads = createTable("thread", {
-  id: text("id").primaryKey(),
+export const technicalSpecification = createTable("thread", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  ts: text("ts").notNull(),
+  technicalSpecification: text("technical_specification").notNull(),
+  npa: text("npa").notNull(),
   createdAt: timestamp("created_at", {
     mode: "date",
     withTimezone: true,
@@ -52,12 +53,13 @@ export const threads = createTable("thread", {
   }).$onUpdateFn(() => new Date()),
 });
 
-export const messages = createTable("message", {
-  id: text("id").primaryKey(),
-  chatId: text("thread_id")
+export const aiMessages = createTable("ai_messages", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  technicalSpecification_id: integer("technical_specification_id")
     .notNull()
-    .references(() => threads.id, { onDelete: "cascade" }),
-  content: text("content").notNull(),
+    .references(() => technicalSpecification.id, { onDelete: "cascade" }),
+  question: text("question").notNull(),
+  answer: text("answer").notNull(),
   createdAt: timestamp("created_at", {
     mode: "date",
     withTimezone: true,

@@ -1,13 +1,23 @@
 import type { AIResponse } from "../@types/ai-response";
 import { client } from "./setup";
+import { headers } from "next/headers";
+import { auth } from "@/server/auth";
+import { db } from "@/server/db";
 
 export async function GetNpaRules(ts: string): Promise<AIResponse[]> {
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!session?.user) {
+    throw new Error("Not authorized");
+  }
+  console.log(session.user);
+
   const chatResult = await client.chat.completions.create({
     messages: [
       {
         role: "system",
         content:
-          "Ответь строго в формате JSON — массив объектов, содержащих: name, description, sentensePart, reccomendations. Recomendations - опиши подходы, как можно улучшить или справить тз по этим законам. Не добавляй пояснений или комментариев. Клиент отдаст только техническое задание.",
+          "Найди в техническом задании абсолютно все норматинво правовые акты(аннонсированые и уже внесенные), которые упоминаются. Ответь строго в формате JSON — массив объектов, содержащих: name, description, sentensePart, recommendations. Recomendations - опиши подходы, как можно улучшить или справить тз по этим законам, new - вступили ли в силу эти акты или пока анонсированы(true-пока не добавлен/false - уже внесен в реестр). Не добавляй пояснений или комментариев. Клиент отдаст только техническое задание.",
       },
       {
         role: "user",

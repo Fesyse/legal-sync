@@ -1,6 +1,7 @@
 import { client } from "./setup";
 
 export async function GetMoreRecommendations(npa: string, ts: string) {
+
   const chatResult = await client.chat.completions.create({
     messages: [
       {
@@ -16,5 +17,5 @@ export async function GetMoreRecommendations(npa: string, ts: string) {
     model: "gemini-2.0-flash-001",
     max_tokens: 200000,
   });
-  return chatResult.choices[0]?.message;
+  return chatResult.choices[0]?.message.content;
 }
