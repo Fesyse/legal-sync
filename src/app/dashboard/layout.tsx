@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/dashboard/sidebar/app-sidebar";
+import { AppMainSidebar } from "@/components/dashboard/sidebar/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -10,7 +10,7 @@ import type { PropsWithChildren } from "react";
 export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppMainSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
