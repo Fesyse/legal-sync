@@ -57,12 +57,14 @@ export function LoginForm() {
       result = await authClient.signIn.email({
         email: data.email,
         password: data.password,
+        callbackURL: "/dashboard",
       });
     } else {
       result = await authClient.signUp.email({
         name: (data as AuthSignUpSchema).name,
         email: data.email,
         password: data.password,
+        callbackURL: "/dashboard",
       });
     }
 
