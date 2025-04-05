@@ -2,6 +2,12 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@utility bg-noise {
+  background-image: url(/noise.png);
+  background-size: auto;
+  background-repeat: repeat;
+  background-size: 96px 96px;
+}
 
 @theme {
   --font-sans:
@@ -121,6 +127,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-noise bg-background text-foreground;
   }
 }
