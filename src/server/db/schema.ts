@@ -3,11 +3,11 @@
 
 import { sql } from "drizzle-orm";
 import {
+  boolean,
   index,
   pgTableCreator,
   text,
   timestamp,
-  boolean,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -81,3 +81,27 @@ export const posts = createTable(
   }),
   (t) => [index("name_idx").on(t.name)],
 );
+
+// export type AIResponse = {
+//   name: string; // название нпа
+//   description: string; // описание нпа
+//   sentensePart: string; // часть тз кооторая отвечает за  этот нпа
+//   recommendations: string[]; // рекомендации к ТЗ (какой закон лучше применить и тд.)
+// };
+
+// export const threads = createTable("thread", {
+//   id: text("id").primaryKey(),
+//   userId: text("user_id")
+//     .notNull()
+//     .references(() => users.id, { onDelete: "cascade" }),
+//   technicalSpecification: text("ts").notNull(),
+//   message: AIResponse,
+//   createdAt: timestamp("created_at", {
+//     mode: "date",
+//     withTimezone: true,
+//   }).default(sql(CURRENT_TIMESTAMP)),
+//   updatedAt: timestamp("updated_at", {
+//     mode: "date",
+//     withTimezone: true,
+//   }).$onUpdateFn(() => new Date()),
+// });

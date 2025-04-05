@@ -27,5 +27,22 @@ export const authSignUpSchema = z.object({
     }),
 });
 
+const npaSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  sentensePart: z.string(),
+});
+export const technicalSpecificationSchema = z.object({
+  id: z.string(),
+  technicalSpecification: z.string(),
+  npa: z.array(npaSchema), // массив npa к моему тех заданию
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export type NpaSchema = z.infer<typeof npaSchema>;
+export type TechnicalSpecificationSchema = z.infer<
+  typeof technicalSpecificationSchema
+>;
 export type AuthSignInSchema = z.infer<typeof authSignInSchema>;
 export type AuthSignUpSchema = z.infer<typeof authSignUpSchema>;

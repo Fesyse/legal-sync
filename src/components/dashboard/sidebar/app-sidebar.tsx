@@ -14,17 +14,16 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { RiGeminiFill } from "react-icons/ri";
 import { NavUser } from "./nav-user";
-import { sidebarNav } from "./sidebar";
+import { useSidebarNav } from "./sidebar";
 
 export function AppMainSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const [activeItem, setActiveItem] = React.useState(
-    sidebarNav.navMain[0]?.items[0],
-  );
-
+  const { navMain } = useSidebarNav();
+  const pathname = usePathname();
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -47,7 +46,7 @@ export function AppMainSidebar({
         <SidebarGroup>
           <SidebarGroupContent className="px-1.5 md:px-0">
             <SidebarMenu className="flex flex-col gap-7">
-              {sidebarNav.navMain.map((block) => {
+              {navMain.map((block) => {
                 return (
                   <div key={block.title} className="flex flex-col gap-5">
                     <SidebarMenuItem
@@ -60,27 +59,30 @@ export function AppMainSidebar({
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                     <ul className="flex flex-col gap-3">
-                      {block.items.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                          <SidebarMenuButton
-                            asChild
-                            tooltip={{
-                              children: item.title,
-                              hidden: false,
-                            }}
-                            onClick={() => {
-                              setActiveItem(item);
-                            }}
-                            isActive={activeItem?.title === item.title}
-                            className="px-2.5 md:px-2"
-                          >
-                            <Link href={item.url}>
-                              <item.icon />
-                              <span>{item.title}</span>
-                            </Link>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      ))}
+                      {!!block.items?.length ? (
+                        block.items.map((item) => (
+                          <SidebarMenuItem key={item.title}>
+                            <SidebarMenuButton
+                              asChild
+                              tooltip={{
+                                children: item.title,
+                                hidden: false,
+                              }}
+                              isActive={pathname === item.url}
+                              className="px-2.5 md:px-2"
+                            >
+                              <Link href={item.url}>
+                                <item.icon />
+                                <span>{item.title}</span>
+                              </Link>
+                            </SidebarMenuButton>
+                          </SidebarMenuItem>
+                        ))
+                      ) : (
+                        <span className="text-foreground/50 px-2 text-xs">
+                          Нет доступных пунктов
+                        </span>
+                      )}
                     </ul>
                   </div>
                 );
