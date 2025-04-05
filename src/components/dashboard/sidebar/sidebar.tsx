@@ -1,10 +1,9 @@
-import type { TechnicalSpecificationSchema } from "@/lib/schemas";
+"use client";
+import { api } from "@/trpc/react";
 import {
   ClipboardCheck,
-  Edit2,
   File,
   History,
-  Home,
   HomeIcon,
   LayoutDashboard,
   Pointer,
@@ -13,7 +12,8 @@ import {
 import { RiQuestionLine, RiTaskLine } from "react-icons/ri";
 
 export const useSidebarNav = () => {
-  const technicalSpecifications: TechnicalSpecificationSchema[] = [];
+  const { data: technicalSpecifications } =
+    api.technicalSpecification.getAll.useQuery();
   return {
     navMain: [
       {
@@ -24,7 +24,6 @@ export const useSidebarNav = () => {
             title: "Домашняя",
             url: "/dashboard",
             icon: SquareDashedBottom,
-            isActive: true,
           },
           // Страница на которой отображается ваше ТЗ и НПА-шки
           {
@@ -40,16 +39,9 @@ export const useSidebarNav = () => {
         ],
       },
       {
-        title: "Основное",
+        title: "Обучение",
         icon: HomeIcon,
         items: [
-          {
-            title: "Главная",
-
-            url: "/",
-            icon: Home,
-            isActive: true,
-          },
           {
             title: "Что такое НПА?",
             url: "/dashboard/getting-started#npa",
@@ -65,8 +57,8 @@ export const useSidebarNav = () => {
       {
         title: "Тех. задания",
         icon: RiTaskLine,
-        items: technicalSpecifications.map((item) => ({
-          title: item.technicalSpecification,
+        items: technicalSpecifications?.map((item) => ({
+          title: item.title,
           url: `/dashboard/task/${item.id}`,
           icon: ClipboardCheck,
         })),

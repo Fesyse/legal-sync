@@ -25,6 +25,7 @@ export function AppMainSidebar({
   const { navMain } = useSidebarNav();
   const { open } = useSidebar();
   const pathname = usePathname();
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

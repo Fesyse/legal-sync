@@ -35,7 +35,6 @@ import {
   MoreVerticalIcon,
 } from "lucide-react";
 import * as React from "react";
-import { z } from "zod";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -48,14 +47,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -65,16 +56,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { TechnicalSpecificationSchema } from "@/lib/schemas";
 import Link from "next/link";
 
-export const schema = z.object({
-  id: z.string(),
-  technicalSpecification: z.string(),
-  updatedAt: z.date(),
-  status: z.string(),
-});
-
-const columns: ColumnDef<z.infer<typeof schema>>[] = [
+const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -102,7 +87,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "technicalSpecification",
+    accessorKey: "title",
     header: "Краткое техническое задание",
     cell: ({ row }) => {
       return (
@@ -111,7 +96,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
             href={`/dashboard/task/${row.original.id}`}
             className="text-foreground w-fit px-0 text-left"
           >
-            {row.original.technicalSpecification}
+            {row.original.title}
           </Link>
         </Button>
       );
@@ -125,7 +110,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
       return (
         <div className="w-32">
           <Badge variant="outline" className="text-muted-foreground px-1.5">
-            {new Date(row.original.updatedAt).toDateString()}
+            {new Date(row.original?.updatedAt!).toDateString()}
           </Badge>
         </div>
       );
@@ -187,9 +172,9 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 export function DataTable({
   data: initialData,
 }: {
-  data: z.infer<typeof schema>[];
+  data: TechnicalSpecificationSchema[];
 }) {
-  const [data, setData] = React.useState(() => initialData);
+  const [data, setData] = React.useState(initialData);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -255,22 +240,6 @@ export function DataTable({
       className="flex w-full flex-col justify-start gap-6"
     >
       <div className="flex items-center justify-between">
-        <Label htmlFor="view-selector" className="sr-only">
-          View
-        </Label>
-        <Select defaultValue="all">
-          <SelectTrigger
-            className="flex w-fit @4xl/main:hidden"
-            id="view-selector"
-          >
-            <SelectValue placeholder="Select a view" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Все</SelectItem>
-            <SelectItem value="not-new">Не анонсированные</SelectItem>
-            <SelectItem value="new">Анонсированные</SelectItem>
-          </SelectContent>
-        </Select>
         <TabsList className="hidden @4xl/main:flex">
           <TabsTrigger value="outline">Все</TabsTrigger>
           <TabsTrigger value="past-performance" className="gap-1">
@@ -382,7 +351,12 @@ export function DataTable({
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      Ничего не найдено
+                      <div className="inline-flex flex-col gap-2">
+                        Технических заданий не найдено
+                        <Button type="button" asChild variant="outline">
+                          <Link href={"/dashboard"}>Создать</Link>
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 )}

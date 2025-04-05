@@ -1,5 +1,4 @@
-import { NPAForm } from "@/app/(home)/npa-form";
-import { default as HomePage } from "@/app/(home)/page";
+import { TechnicalSpecificationDetail } from "@/app/dashboard/task/[id]/technical-specification-detail";
 
 export default async function EditorPage({
   params,
@@ -7,5 +6,5 @@ export default async function EditorPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  return <NPAForm />;
+  return <TechnicalSpecificationDetail />;
 }

@@ -10,7 +10,7 @@ export const SocialButtons = () => {
       <Button
         variant="outline"
         type="button"
-        className="w-full"
+        className="w-full text-xs"
         onClick={async () => {
           const result = await authClient.signIn.social({
             provider: "google",

@@ -1,15 +1,16 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
+import { STATUS } from "@/lib/schemas";
 import { init } from "@paralleldrive/cuid2";
+import { sql } from "drizzle-orm";
 import {
-  index,
+  boolean,
+  integer,
   pgTableCreator,
   text,
   timestamp,
-  boolean,
-  integer,
+  varchar,
 } from "drizzle-orm/pg-core";
 
 export const createCuid = init({
@@ -41,20 +42,20 @@ export const users = createTable("user", {
   }).$onUpdateFn(() => new Date()),
 });
 
-export const technicalSpecification = createTable("thread", {
+export const technicalSpecification = createTable("technical_specification", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createCuid()),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  technicalSpecification: text("technical_specification").notNull(),
-  npa: text("npa").notNull(),
-  createdAt: timestamp("created_at", {
-    mode: "date",
-    withTimezone: true,
-  }).default(sql`CURRENT_TIMESTAMP`),
-  is_inProccess: boolean("is_inProccess").notNull().default(true),
+  title: text("title").notNull(),
+  npa: text("npa")
+    .array()
+    .notNull()
+    .default(sql`ARRAY[]::text[]`),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
+  status: varchar("role", { length: 255, enum: STATUS }).notNull(),
   updatedAt: timestamp("updated_at", {
     mode: "date",
     withTimezone: true,
@@ -131,17 +132,3 @@ export const verification = createTable("verification", {
   createdAt: timestamp("created_at"),
   updatedAt: timestamp("updated_at"),
 });
-
-export const posts = createTable(
-  "post",
-  (d) => ({
-    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
-    name: d.varchar({ length: 256 }),
-    createdAt: d
-      .timestamp({ withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
-  }),
-  (t) => [index("name_idx").on(t.name)],
-);

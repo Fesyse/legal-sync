@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+export const STATUS = ["done", "error", "inProcess"] as const;
 export const authSignInSchema = z.object({
   email: z.string().email({ message: "Неверный email" }),
   password: z
@@ -27,19 +27,21 @@ export const authSignUpSchema = z.object({
     }),
 });
 
-const npaSchema = z.object({
+export const npaSchema = z.object({
   name: z.string(),
   description: z.string(),
   sentensePart: z.string(),
 });
+export const TYPE = ["announced", "default"] as const;
 export const technicalSpecificationSchema = z.object({
   id: z.string(),
-  technicalSpecification: z.string(),
-  npa: z.array(npaSchema), // массив npa к моему тех заданию
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  title: z.string(),
+  npa: z.array(z.string()), // массив npa к моему тех заданию
+  createdAt: z.date().nullable(),
+  updatedAt: z.date().nullable(),
+  userId: z.string(),
+  status: z.enum(STATUS),
 });
-
 export type NpaSchema = z.infer<typeof npaSchema>;
 export type TechnicalSpecificationSchema = z.infer<
   typeof technicalSpecificationSchema

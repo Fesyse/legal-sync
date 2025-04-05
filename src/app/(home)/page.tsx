@@ -1,8 +1,9 @@
 import { AnimatedTitle } from "@/components/animated-title";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Link } from "lucide-react";
 import NextLink from "next/link";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { CreateTechnicalSpecificationButton } from "./create-technical-specifiaction-button";
 
 type HomeProps = {
   className?: string;
@@ -27,9 +28,9 @@ export default function HomePage({ className }: HomeProps) {
       />
 
       <div className="flex items-center gap-3">
-        <Button variant="outline">Создать тз</Button>
+        <CreateTechnicalSpecificationButton />
         <NextLink href={"/dashboard/history"}>
-          <Button variant="outline">Посмотреть историю</Button>
+          <Button variant="outline">Посмотреть историю моих ТЗ</Button>
         </NextLink>
       </div>
     </main>
