@@ -1,13 +1,12 @@
 import { client } from "./setup";
 
 export async function GetMoreRecommendations(npa: string, ts: string) {
-
   const chatResult = await client.chat.completions.create({
     messages: [
       {
         role: "system",
         content:
-          "Расскажи всю информацию о рекомендациях по выполнению закона и примерах по техническому заданию и названию закона",
+          "Пожалуйста, предоставь ключевую информацию о рекомендациях по выполнению закона, включая конкретные примеры для технического задания и примеры названий законов, без лишних комментариев.",
       },
       {
         role: "user",

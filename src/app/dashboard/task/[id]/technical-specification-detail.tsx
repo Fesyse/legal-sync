@@ -11,6 +11,7 @@ import { NpaListSkeleton } from "@/app/dashboard/task/[id]/npa-list-skeleton";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "motion/react";
 import { Input } from "@/components/ui/input";
+
 export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
   // usestate
   const [title, setTitle] = useState<string>("");
@@ -18,14 +19,15 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
   const [description, setDescription] = useState<Content>("");
 
   // usequery
-  const { data, isLoading } = api.technicalSpecification.getById.useQuery({
-    id,
-  });
+  const { data: technicalSpecification } =
+    api.technicalSpecification.getById.useQuery({
+      id,
+    });
 
   // mutation
   const { mutate: update, isPending } =
     api.technicalSpecification.updateById.useMutation({
-      onSuccess: (data) => {
+      onSuccess: () => {
         toast.success("Техническое задание успешно обновлено!");
       },
       onError: (error) => {
@@ -34,7 +36,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
     });
   const { mutate: finish } =
     api.technicalSpecification.finishTsById.useMutation({
-      onSuccess: (data) => {
+      onSuccess: () => {
         toast.success("Техническое задание успешно завершено!");
       },
       onError: (error) => {
@@ -44,13 +46,13 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
 
   // useeffect
   useEffect(() => {
-    if (data?.description) {
-      setDescription(data?.description);
+    if (technicalSpecification?.description) {
+      setDescription(technicalSpecification?.description);
     }
-    if (data?.title) {
-      setTitle(data?.title);
+    if (technicalSpecification?.title) {
+      setTitle(technicalSpecification?.title);
     }
-  }, [data]);
+  }, [technicalSpecification]);
 
   // function
   const saveData = async () => {
@@ -99,7 +101,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
         )}
       </AnimatePresence>
       <div className="flex h-full w-full flex-col gap-5">
-        {data === undefined ? (
+        {technicalSpecification === undefined ? (
           <NpaListSkeleton key="skeletons" />
         ) : (
           <div className="">

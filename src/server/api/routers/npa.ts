@@ -9,13 +9,11 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
-import { technicalSpecification } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
 
 export const npaRouter = createTRPCRouter({
   getAllByTS: publicProcedure
     .input(z.object({ description: z.string(), title: z.string() }))
-    .query(async ({ ctx, input: { description, title } }) => {
+    .query(async ({ input: { description, title } }) => {
       return await GetNpaRules(description, title);
     }),
   getNpaInfoById: protectedProcedure
@@ -24,7 +22,7 @@ export const npaRouter = createTRPCRouter({
         npa: z.string(),
       }),
     )
-    .query(async ({ ctx, input: { npa } }) => {
+    .query(async ({ input: { npa } }) => {
       return await GetNpaDetails(npa);
     }),
 
@@ -35,7 +33,7 @@ export const npaRouter = createTRPCRouter({
         description: z.string(),
       }),
     )
-    .query(async ({ ctx, input: { npa, description } }) => {
+    .query(async ({ input: { npa, description } }) => {
       return await GetMoreRecommendations(npa, description);
     }),
   getRecommendationsForTSByManyNPAs: protectedProcedure
@@ -45,7 +43,7 @@ export const npaRouter = createTRPCRouter({
         description: z.string(),
       }),
     )
-    .query(async ({ ctx, input: { npas, description } }) => {
+    .query(async ({ input: { npas, description } }) => {
       return await GetMoreRecommendationsByManyNpas(npas, description);
     }),
 });
