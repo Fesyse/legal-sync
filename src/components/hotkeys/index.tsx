@@ -5,7 +5,6 @@ import { useState } from "react";
 
 export function Hotkeys() {
   const { hotkeys } = useHotkeys();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [hotkeyId, setHotkeyId] = useState<string | undefined>();
 
   return (
@@ -16,14 +15,12 @@ export function Hotkeys() {
             {hotkeys.map((h) => (
               <li
                 key={h.id}
-                onClick={() => {
-                  setHotkeyId(h.id);
-                }}
+                onClick={() => setHotkeyId(h.id)}
                 className="bg-muted/50 flex w-full cursor-pointer items-center justify-between gap-2 rounded-sm px-4 py-2"
               >
                 <div className="w-full">{h.text}</div>
                 <kbd className="bg-muted pointer-events-none flex items-center gap-1 rounded-sm border px-2 py-1 font-mono text-base font-medium whitespace-nowrap select-none">
-                  {h.key}
+                  {h.displayKey}
                 </kbd>
               </li>
             ))}
