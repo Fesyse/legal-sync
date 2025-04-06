@@ -14,6 +14,7 @@ import type { NpaSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { motion } from "framer-motion";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function NpaCard({
@@ -26,12 +27,13 @@ export function NpaCard({
   setSelected: (ids: string[]) => void;
   selected: string[];
 }) {
+  const { id } = useParams<{ id: string }>();
   const {
     data: detailRecommendations,
     refetch: getRecommendations,
     isLoading: isLoadingRecommendations,
   } = api.npa.getRecommendationsForTS.useQuery(
-    { npa: name, description: description },
+    { npa: name, id },
     { enabled: false },
   );
   const {

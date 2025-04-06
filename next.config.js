@@ -6,6 +6,7 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  reactMaxHeadersLength: 1000,
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",

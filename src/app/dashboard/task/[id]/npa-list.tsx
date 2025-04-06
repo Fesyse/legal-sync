@@ -18,6 +18,7 @@ import { RxCross2 } from "react-icons/rx";
 import { NpaCard } from "./npa-card";
 import { NpaListSkeleton } from "./npa-list-skeleton";
 import { SearchForm } from "./search-form";
+import { useParams } from "next/navigation";
 
 export function NpaList({
   description,
@@ -28,6 +29,7 @@ export function NpaList({
   description: string;
   title: string;
 }) {
+  const { id } = useParams<{ id: string }>();
   const [filters, setFilters] = useState<FilterNpaSchema | undefined>();
 
   const [selected, setSelected] = useState<string[]>([]);
@@ -42,12 +44,7 @@ export function NpaList({
     isLoading: isInitialLoading,
     refetch,
     isRefetching,
-  } = api.npa.getAllByTS.useQuery(
-    { description, title },
-    {
-      enabled: false,
-    },
-  );
+  } = api.npa.getAllByTS.useQuery({ id }, { enabled: false });
 
   const isLoading = isRefetching || isInitialLoading;
   //   // TODO: Подумать над получением рекомендаций из AI (Возможность выбрать документы, на соответствие которым пользователь
