@@ -19,6 +19,7 @@ import { usePathname } from "next/navigation";
 import { RiGeminiFill } from "react-icons/ri";
 import { DashboardNavUser } from "./nav-user";
 import { useSidebarNav } from "@/lib/sidebar";
+import { Icons } from "@/components/ui/icons";
 
 export function AppMainSidebar({
   ...props
@@ -34,9 +35,7 @@ export function AppMainSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
               <Link href="/">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <RiGeminiFill className="size-4" />
-                </div>
+                <Icons.logo className="ml-2" />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Legal Sync</span>
                 </div>

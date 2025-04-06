@@ -1,11 +1,13 @@
+import { cn } from "@/lib/utils";
+
 export const Icons = {
-  logo: () => (
+  logo: ({ className }: { className?: string }) => (
     <svg
       fill="currentColor"
       viewBox="0 0 40 20"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
-      className="size-8"
+      className={className}
     >
       <path d="M5 0H9V16H20V20H5V0Z"></path>
       <path d="M22 4C22 1.8 23.8 0 26 0H36C38.2 0 40 1.8 40 4V6H36V4H26V8L36 12V16C36 18.2 34.2 20 32 20H22C19.8 20 18 18.2 18 16V14H22V16H32V12L22 8V4Z"></path>
