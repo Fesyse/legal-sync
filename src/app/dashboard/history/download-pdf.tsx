@@ -1,6 +1,7 @@
 "use client";
 
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { api } from "@/trpc/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -17,6 +18,13 @@ type DownloadPDFProps = {
 };
 
 export const DownloadPDF: React.FC<DownloadPDFProps> = ({ data }) => {
+  const [trigger, fetchTechnicalSpecification] = useState(false);
+  const { data: technicalSpecification } =
+    api.technicalSpecification.getById.useQuery(
+      { id: data.id },
+      { enabled: trigger },
+    );
+
   const [isConverting, setIsConverting] = useState(false);
   const [cssContent, setCssContent] = useState("");
 
@@ -84,13 +92,17 @@ export const DownloadPDF: React.FC<DownloadPDFProps> = ({ data }) => {
 
   const convertToPdf = async () => {
     setIsConverting(true);
+    fetchTechnicalSpecification(true);
 
     toast(<span>Начинаем создание PDF</span>, {
       description: "Пожалуйста, подождите, пока мы создаем ваш PDF...",
       duration: 3000,
     });
+  };
 
-    // Use setTimeout to allow the UI to update before starting the heavy process
+  useEffect(() => {
+    if (!technicalSpecification) return;
+
     setTimeout(async () => {
       try {
         // Import the libraries
@@ -106,9 +118,12 @@ export const DownloadPDF: React.FC<DownloadPDFProps> = ({ data }) => {
         // Create a temporary container for the content
         const container = document.createElement("div");
 
+        // TODO: Add content from the database
+        const HTML_CONTENT = technicalSpecification.description;
+
         // Add the minimal-tiptap-editor class to enable the CSS
         container.className = "minimal-tiptap-editor";
-        container.innerHTML = `<div class="ProseMirror"><h1 class="heading-node">${data.title}</h1></div>`;
+        container.innerHTML = `<div class="ProseMirror">${HTML_CONTENT}</div>`;
 
         // Set a fixed width that matches A4 proportions but don't set height
         container.style.width = "210mm"; // A4 width
@@ -281,7 +296,7 @@ export const DownloadPDF: React.FC<DownloadPDFProps> = ({ data }) => {
         setIsConverting(false);
       }
     }, 100); // Small delay to allow UI update
-  };
+  }, [technicalSpecification]);
 
   return (
     <DropdownMenuItem onClick={convertToPdf}>Скачать в PDF</DropdownMenuItem>
