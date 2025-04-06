@@ -18,7 +18,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RiGeminiFill } from "react-icons/ri";
 import { DashboardNavUser } from "./nav-user";
-import { useSidebarNav } from "./sidebar";
+import { useSidebarNav } from "@/lib/sidebar";
 
 export function AppMainSidebar({
   ...props

@@ -46,14 +46,14 @@ export const useSidebarNav = () => {
         icon: HomeIcon,
         items: [
           {
-            title: "Что такое НПА?",
-            url: "/dashboard/getting-started#npa",
-            icon: File,
-          },
-          {
             title: "Как пользоваться сервисом?",
             url: "/dashboard/getting-started#usage",
             icon: Pointer,
+          },
+          {
+            title: "Что такое НПА?",
+            url: "/dashboard/getting-started#npa",
+            icon: File,
           },
           {
             title: "Горячие клавиши",
