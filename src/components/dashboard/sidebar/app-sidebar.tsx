@@ -11,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSkeleton,
   useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
@@ -53,30 +54,36 @@ export function AppMainSidebar({
                   <div key={block.title} className="flex flex-col">
                     <SidebarGroupLabel>{block.title}</SidebarGroupLabel>
                     <ul className="flex flex-col gap-2">
-                      {!!block.items?.length
-                        ? block.items.map((item) => (
-                            <SidebarMenuItem key={item.url}>
-                              <SidebarMenuButton
-                                asChild
-                                tooltip={{
-                                  children: item.title,
-                                  hidden: false,
-                                }}
-                                isActive={pathname === item.url}
-                                className="px-2.5 md:px-2"
-                              >
-                                <Link href={item.url}>
-                                  <item.icon />
-                                  <span>{item.title}</span>
-                                </Link>
-                              </SidebarMenuButton>
+                      {block.isLoading
+                        ? Array.from({ length: 5 }).map((_, i) => (
+                            <SidebarMenuItem key={i}>
+                              <SidebarMenuSkeleton showIcon />
                             </SidebarMenuItem>
                           ))
-                        : open && (
-                            <span className="text-foreground/50 px-2 text-xs">
-                              Нет доступных пунктов
-                            </span>
-                          )}
+                        : block.items?.length
+                          ? block.items.map((item) => (
+                              <SidebarMenuItem key={item.url}>
+                                <SidebarMenuButton
+                                  asChild
+                                  tooltip={{
+                                    children: item.title,
+                                    hidden: false,
+                                  }}
+                                  isActive={pathname === item.url}
+                                  className="px-2.5 md:px-2"
+                                >
+                                  <Link href={item.url}>
+                                    <item.icon />
+                                    <span>{item.title}</span>
+                                  </Link>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                            ))
+                          : open && (
+                              <span className="text-foreground/50 px-2 text-xs">
+                                Нет доступных пунктов
+                              </span>
+                            )}
                     </ul>
                   </div>
                 );

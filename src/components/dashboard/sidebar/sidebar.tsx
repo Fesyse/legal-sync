@@ -13,8 +13,9 @@ import {
 import { RiQuestionLine, RiTaskLine } from "react-icons/ri";
 
 export const useSidebarNav = () => {
-  const { data: technicalSpecifications } =
+  const { data: technicalSpecifications, isLoading } =
     api.technicalSpecification.getAll.useQuery();
+
   return {
     navMain: [
       {
@@ -63,6 +64,7 @@ export const useSidebarNav = () => {
       {
         title: "Тех. задания",
         icon: RiTaskLine,
+        isLoading,
         items: technicalSpecifications?.map((item) => ({
           title: item.title,
           url: `/dashboard/task/${item.id}`,
