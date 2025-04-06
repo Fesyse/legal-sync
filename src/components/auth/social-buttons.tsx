@@ -8,6 +8,7 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export const SocialButtons = () => {
   const signIn = (provider: "google" | "vk" | "github") => async () => {
+    console.log(true);
     const result = await authClient.signIn.social({
       provider,
       callbackURL: "/dashboard",
@@ -20,15 +21,15 @@ export const SocialButtons = () => {
 
   return (
     <div className="grid grid-cols-3 items-center gap-2">
-      <Button variant="outline" type="button" onClick={() => signIn("google")}>
+      <Button variant="outline" type="button" onClick={signIn("google")}>
         <Icons.google />
         Google
       </Button>
-      <Button variant="outline" type="button" onClick={() => signIn("vk")}>
+      <Button variant="outline" type="button" onClick={signIn("vk")}>
         <Icons.vk />
         VK
       </Button>
-      <Button variant="outline" type="button" onClick={() => signIn("github")}>
+      <Button variant="outline" type="button" onClick={signIn("github")}>
         <GitHubLogoIcon className="size-5" />
         Github
       </Button>
