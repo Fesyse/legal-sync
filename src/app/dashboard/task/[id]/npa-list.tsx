@@ -120,7 +120,7 @@ export function NpaList({
         {isLoading ? (
           <NpaListSkeleton key="skeletons" />
         ) : data?.length ? (
-          <ScrollArea className="overflow-auto">
+          <ScrollArea className="max-h-[100vh] overflow-auto">
             <motion.div
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
