@@ -27,5 +27,9 @@ export const auth = betterAuth({
       clientId: env.AUTH_VK_CLIENT_ID,
       clientSecret: env.AUTH_VK_CLIENT_SECRET,
     },
+    github: {
+      clientId: env.AUTH_GITHUB_CLIENT_ID,
+      clientSecret: env.AUTH_GITHUB_CLIENT_SECRET,
+    },
   },
 });
