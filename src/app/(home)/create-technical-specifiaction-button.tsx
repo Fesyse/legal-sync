@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 export function CreateTechnicalSpecificationButton() {
   const utils = api.useUtils();
+  const router = useRouter();
   const { mutate: create } = api.technicalSpecification.create.useMutation({
     onSuccess: (data) => {
       toast.success("Шаблон технического задания успешно создан!");
@@ -17,7 +18,7 @@ export function CreateTechnicalSpecificationButton() {
       toast.error(error.message);
     },
   });
-  const router = useRouter();
+
   return (
     <Button
       onClick={() => {
