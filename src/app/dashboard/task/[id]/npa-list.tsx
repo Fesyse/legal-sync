@@ -1,22 +1,23 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { type FilterNpaSchema } from "@/lib/schemas";
+import { filterNpa } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { NpaCard } from "./npa-card";
-import { SearchForm } from "./search-form";
-import { type FilterNpaSchema } from "@/lib/schemas";
 import { NpaListSkeleton } from "./npa-list-skeleton";
-import { filterNpa } from "@/lib/utils";
+import { SearchForm } from "./search-form";
 
 // const data = [
 //   {
@@ -79,7 +80,7 @@ export function NpaList({
   }, []);
 
   return (
-    <div className="relative inline-flex min-h-[100vh] w-full max-w-[400px] flex-col gap-5 p-4 lg:max-w-[800px]">
+    <div className="relative inline-flex h-full w-full max-w-[400px] flex-col gap-5 p-4 lg:max-w-[800px]">
       <div className="flex w-full justify-between gap-5">
         <TooltipProvider>
           <Tooltip>
@@ -120,36 +121,38 @@ export function NpaList({
         {isLoading ? (
           <NpaListSkeleton key="skeletons" />
         ) : data?.length ? (
-          <motion.div
-            animate={{ opacity: 1 }}
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            key={"npa-list"}
-          >
-            <ul className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-              {data
-                .filter((npa) => {
-                  if (!filters) return true;
+          <ScrollArea className="max-h-[800px] overflow-auto">
+            <motion.div
+              animate={{ opacity: 1 }}
+              initial={{ opacity: 0 }}
+              exit={{ opacity: 0 }}
+              key={"npa-list"}
+            >
+              <ul className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+                {data
+                  .filter((npa) => {
+                    if (!filters) return true;
 
-                  return filterNpa(filters, npa);
-                })
-                .map((npa) => (
-                  <NpaCard
-                    selected={selected}
-                    setSelected={setSelected}
-                    key={npa.name}
-                    id={npa.name}
-                    name={npa.name}
-                    description={npa.description}
-                    sentensePart={npa.sentensePart}
-                    new={npa.new}
-                    recommendations={
-                      npa.recommendation ? npa.recommendation : ""
-                    }
-                  />
-                ))}
-            </ul>
-          </motion.div>
+                    return filterNpa(filters, npa);
+                  })
+                  .map((npa) => (
+                    <NpaCard
+                      selected={selected}
+                      setSelected={setSelected}
+                      key={npa.name}
+                      id={npa.name}
+                      name={npa.name}
+                      description={npa.description}
+                      sentensePart={npa.sentensePart}
+                      new={npa.new}
+                      recommendations={
+                        npa.recommendation ? npa.recommendation : ""
+                      }
+                    />
+                  ))}
+              </ul>
+            </motion.div>
+          </ScrollArea>
         ) : (
           <motion.div
             animate={{ opacity: 1 }}

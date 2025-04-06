@@ -27,7 +27,7 @@ export default function HomePage({ className }: HomeProps) {
         description="Проверьте своё ТЗ на соответствие нормативно-правовым актам"
       />
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col items-center gap-3 lg:flex-row">
         <CreateTechnicalSpecificationButton />
         <NextLink href={"/dashboard/history"}>
           <Button variant="outline">Посмотреть историю моих ТЗ</Button>

@@ -54,11 +54,11 @@ export function NpaCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={cn("w-full transition-all", {
+      className={cn("h-full w-full transition-all", {
         "col-span-2": isRecommendationsOpen,
       })}
     >
-      <Card className="relative overflow-hidden">
+      <Card className="relative flex h-full flex-col overflow-hidden">
         <CardHeader>
           {isNew && (
             <motion.div
@@ -84,7 +84,7 @@ export function NpaCard({
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="flex-[1_1_auto]">
           <div className="bg-muted rounded-md p-3">
             <h4 className="mb-1 text-sm font-medium">
               Часть предложения из ТЗ:

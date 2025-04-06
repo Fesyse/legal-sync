@@ -168,7 +168,7 @@ export function ChatForm() {
       </ScrollArea>
       <form
         onSubmit={handleSubmit}
-        className="bg-foreground/5 absolute bottom-0 left-1/2 min-w-3xl -translate-x-1/2 rounded-t-[20px] p-2"
+        className="bg-foreground/5 absolute bottom-0 left-1/2 min-w-xs -translate-x-1/2 rounded-t-[20px] p-2 min-[479px]:min-w-sm sm:min-w-lg md:min-w-2xl lg:min-w-3xl"
       >
         <Textarea
           placeholder="Напишите ваш вопрос.."
