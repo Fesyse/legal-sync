@@ -9,7 +9,7 @@ export default function History() {
   return (
     <>
       <h1 className="text-xl font-bold">Актуальные тех. задания</h1>
-      <DataTable data={technicalSpecifications!} />
+      <DataTable data={technicalSpecifications ?? []} />
     </>
   );
 }
