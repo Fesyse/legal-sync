@@ -76,11 +76,10 @@ export function NpaList({
 
   useEffect(() => {
     refetch();
-    console.log(data);
   }, []);
 
   return (
-    <div className="relative inline-flex h-full w-full max-w-[400px] flex-col gap-5 p-4 lg:max-w-[800px]">
+    <div className="relative inline-flex h-full w-full max-w-[400px] min-w-[200px] flex-col gap-5 p-4 sm:min-w-[200px] lg:max-w-[800px] lg:min-w-[400px] 2xl:min-w-[700px]">
       <div className="flex w-full justify-between gap-5">
         <TooltipProvider>
           <Tooltip>
@@ -121,14 +120,15 @@ export function NpaList({
         {isLoading ? (
           <NpaListSkeleton key="skeletons" />
         ) : data?.length ? (
-          <ScrollArea className="max-h-[800px] overflow-auto">
+          <ScrollArea className="overflow-auto">
             <motion.div
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
               exit={{ opacity: 0 }}
               key={"npa-list"}
+              className=""
             >
-              <ul className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              <ul className="grid grid-cols-1 gap-5 2xl:grid-cols-2">
                 {data
                   .filter((npa) => {
                     if (!filters) return true;
