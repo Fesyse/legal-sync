@@ -8,10 +8,13 @@ import {
 import type { PropsWithChildren } from "react";
 import { TaskTitle } from "./task/[id]/task-title";
 import { CommandMenu } from "@/components/command-menu";
+import { api, HydrateClient } from "@/trpc/server";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
+  void api.technicalSpecification.getAll.prefetch();
+
   return (
-    <>
+    <HydrateClient>
       <SidebarProvider>
         <AppMainSidebar />
         <SidebarInset className="bg-noise">
@@ -30,6 +33,6 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
         </SidebarInset>
       </SidebarProvider>
       <CommandMenu />
-    </>
+    </HydrateClient>
   );
 }
