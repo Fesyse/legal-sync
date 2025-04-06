@@ -141,7 +141,7 @@ const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
         {row.original.status === "done" ? (
           <>
             <CheckCircle2Icon className="text-green-500 dark:text-green-400" />
-            НПА найдены
+            Тех. задание завершено
           </>
         ) : row.original.status === "error" ? (
           <>
@@ -151,7 +151,7 @@ const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
         ) : (
           <>
             <LoaderIcon />
-            ТЗ в разработке
+            Тех. задание в разработке
           </>
         )}
       </Badge>

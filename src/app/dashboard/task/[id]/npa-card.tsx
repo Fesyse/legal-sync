@@ -39,6 +39,7 @@ export function NpaCard({
     { npa: name, tsId: id },
     { enabled: false },
   );
+  console.log(recommendations);
 
   return (
     <motion.div
@@ -77,13 +78,14 @@ export function NpaCard({
               <PopoverContent side="right" align="start" className="w-80">
                 <div className="space-y-2">
                   <h4 className="mb-4 font-medium">Полные рекомендации</h4>
-                  {(data as unknown as { code: number })?.code != 404 &&
-                  !!data ? (
+                  {recommendations ? (
                     <ul className="list-disc">
                       <TypingAnimation
                         duration={30}
                         className="text-foreground/70 p-0 text-sm leading-5 font-normal"
-                      >{`${data}`}</TypingAnimation>
+                      >
+                        {recommendations}
+                      </TypingAnimation>
                     </ul>
                   ) : (
                     <p className="text-foreground/60 text-center text-xs">

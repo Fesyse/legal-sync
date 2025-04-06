@@ -6,23 +6,14 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { client } from "./setup";
 
-export async function GetNpaRules(id_ts: string): Promise<AIResponse[]> {
+export async function GetNpaRules(
+  description: string,
+  title: string,
+): Promise<AIResponse[]> {
   const session = await auth.api.getSession({ headers: await headers() });
 
   if (!session?.user) {
     throw new Error("Not authorized");
-  }
-
-  const ts_object = await db
-    .select()
-    .from(technicalSpecification)
-    .where(eq(technicalSpecification.id, id_ts));
-  if (!ts_object.length) {
-    throw new Error("Technical specification not found");
-  }
-  const ts = ts_object[0];
-  if (!ts) {
-    throw new Error("Technical specification not found");
   }
 
   const chatResult = await client.chat.completions.create({
@@ -30,11 +21,11 @@ export async function GetNpaRules(id_ts: string): Promise<AIResponse[]> {
       {
         role: "system",
         content:
-          "Найди в техническом задании абсолютно все норматинво правовые акты(аннонсированые и уже внесенные), которые упоминаются. Ответь строго в формате JSON — массив объектов, содержащих: name, description, sentensePart, recommendations. Recomendations - опиши подходы, как можно улучшить или справить тз по этим законам, new - вступили ли в силу эти акты или пока анонсированы(true-пока не добавлен/false - уже внесен в реестр). Не добавляй пояснений или комментариев. Клиент отдаст только техническое задание.",
+          "Проанализируй текст технического задания и извлеки все упомянутые нормативно-правовые акты (включая действующие и анонсированные). Верни результат строго в формате JSON — массив объектов с полями: name (название акта), description (краткое описание), sentensePart (фрагмент ТЗ, где он упоминается), recommendation (как улучшить ТЗ с учётом акта, обычная строка), new (true — если акт только анонсирован, false — если уже действует). Не добавляй пояснений или форматирования вне JSON.",
       },
       {
         role: "user",
-        content: ts.title,
+        content: `${title} ${description}`,
       },
     ],
     model: "gemini-2.0-flash-001",
@@ -52,6 +43,8 @@ export async function GetNpaRules(id_ts: string): Promise<AIResponse[]> {
   try {
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
+      console.log(await parsed);
+
       return parsed;
     } else {
       console.error("Ожидался массив, но пришло что-то другое:", parsed);
