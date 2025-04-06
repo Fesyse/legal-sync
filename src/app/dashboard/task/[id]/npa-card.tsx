@@ -21,6 +21,7 @@ import type { NpaSchema } from "@/lib/schemas";
 import { api } from "@/trpc/react";
 import { motion } from "framer-motion";
 import { MoreVertical } from "lucide-react";
+import { useState } from "react";
 
 export function NpaCard({
   name,
@@ -36,11 +37,10 @@ export function NpaCard({
   selected: string[];
 }) {
   const { data, refetch } = api.npa.getRecommendationsForTS.useQuery(
-    { npa: name, tsId: id },
+    { npa: name, description: description },
     { enabled: false },
   );
-  console.log(recommendations);
-
+  const [isRecommendationsOpen, setIsRecommendationsOpen] = useState(false);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -78,13 +78,13 @@ export function NpaCard({
               <PopoverContent side="right" align="start" className="w-80">
                 <div className="space-y-2">
                   <h4 className="mb-4 font-medium">Полные рекомендации</h4>
-                  {recommendations ? (
+                  {data ? (
                     <ul className="list-disc">
                       <TypingAnimation
                         duration={30}
                         className="text-foreground/70 p-0 text-sm leading-5 font-normal"
                       >
-                        {recommendations}
+                        {data}
                       </TypingAnimation>
                     </ul>
                   ) : (
@@ -96,7 +96,10 @@ export function NpaCard({
               </PopoverContent>
             </Popover>
           </div>
-          <CardDescription className="mt-2">{description}</CardDescription>
+          <CardDescription className="mt-2">
+            {description.substring(0, 100) +
+              (description.length > 100 ? "..." : "")}
+          </CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -118,21 +121,9 @@ export function NpaCard({
                 : "Нет рекомендаций"}
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Checkbox
-              checked={!!selected.find((k) => k === name)}
-              onCheckedChange={(value) =>
-                setSelected(
-                  value
-                    ? [...selected, name]
-                    : selected.filter((k) => k !== name),
-                )
-              }
-              aria-label="select"
-              name={`select-${id}`}
-            />
-            <Label htmlFor={`select-${id}`}>Выбрать на проверку</Label>
-          </div>
+          <Button onClick={() => setIsRecommendationsOpen(true)}>
+            Узнать больше
+          </Button>
         </CardFooter>
       </Card>
     </motion.div>

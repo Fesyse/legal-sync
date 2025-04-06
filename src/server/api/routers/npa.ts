@@ -32,16 +32,11 @@ export const npaRouter = createTRPCRouter({
     .input(
       z.object({
         npa: z.string(),
-        tsId: z.string(),
+        description: z.string(),
       }),
     )
-    .query(async ({ ctx, input: { npa, tsId } }) => {
-      const data = await ctx.db.query.technicalSpecification.findFirst({
-        where: eq(technicalSpecification.id, tsId),
-      });
-      if (!data)
-        return { code: "404", message: "Technical specification not found" };
-      return await GetMoreRecommendations(npa, data?.description!);
+    .query(async ({ ctx, input: { npa, description } }) => {
+      return await GetMoreRecommendations(npa, description);
     }),
   getRecommendationsForTSByManyNPAs: protectedProcedure
     .input(
