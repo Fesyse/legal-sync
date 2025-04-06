@@ -1,4 +1,5 @@
 "use client";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -209,7 +210,7 @@ const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
 export function DataTable({
   data: initialData,
 }: {
-  data: TechnicalSpecificationSchema[];
+  data: Array<Omit<TechnicalSpecificationSchema, "description">>;
 }) {
   const [data, setData] = React.useState(initialData);
   React.useEffect(() => {

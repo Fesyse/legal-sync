@@ -1,8 +1,5 @@
 import { auth } from "@/server/auth";
-import { db } from "@/server/db";
-import { technicalSpecification } from "@/server/db/schema";
 import type { AIResponse } from "@/types/ai-response";
-import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { client } from "./setup";
 

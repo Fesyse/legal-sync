@@ -12,17 +12,14 @@ import { toast } from "sonner";
 import { AnimatePresence, motion } from "motion/react";
 
 export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
-  // usestate
   const [open, setOpen] = useState("closed");
   const [description, setDescription] = useState<Content>("");
 
-  // usequery
   const { data: technicalSpecification } =
     api.technicalSpecification.getById.useQuery({
       id,
     });
 
-  // mutation
   const { mutate: update, isPending } =
     api.technicalSpecification.updateById.useMutation({
       onSuccess: () => {
@@ -42,14 +39,12 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
       },
     });
 
-  // useeffect
   useEffect(() => {
     if (technicalSpecification?.description) {
       setDescription(technicalSpecification?.description);
     }
   }, [technicalSpecification]);
 
-  // function
   const saveData = async () => {
     if (description) {
       update({
@@ -62,7 +57,6 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
       toast.error("Не удалось сохранить данные");
     }
   };
-
   const finishProject = async () => {
     if (description) {
       saveData();

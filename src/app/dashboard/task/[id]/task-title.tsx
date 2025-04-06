@@ -3,7 +3,7 @@
 import debounce from "lodash.debounce";
 import { api } from "@/trpc/react";
 import { useParams, usePathname } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { Input } from "@/components/ui/input";
 
 export const TaskTitle = () => {

@@ -38,9 +38,10 @@ export const technicalSpecificationRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     return await ctx.db.query.technicalSpecification.findMany({
       columns: {
+        description: false,
         id: true,
         title: true,
-        description: false,
+        npa: true,
         status: true,
         createdAt: true,
         updatedAt: true,

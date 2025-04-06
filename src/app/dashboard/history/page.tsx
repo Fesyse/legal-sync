@@ -1,14 +1,13 @@
-"use client";
-import { api } from "@/trpc/react";
+import { api } from "@/trpc/server";
 import { DataTable } from "./data-table";
 
-export default function History() {
-  const { data } = api.technicalSpecification.getAll.useQuery();
+export default async function History() {
+  const technicalSpecifications = await api.technicalSpecification.getAll();
 
   return (
     <>
       <h1 className="text-xl font-bold">Актуальные тех. задания</h1>
-      <DataTable data={data ?? []} />
+      <DataTable data={technicalSpecifications} />
     </>
   );
 }

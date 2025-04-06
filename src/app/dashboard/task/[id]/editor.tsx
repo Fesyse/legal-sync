@@ -2,7 +2,6 @@
 
 import { MinimalTiptapEditor } from "@/components/minimal-tip-tap";
 import { type Content } from "@tiptap/react";
-import { useEffect } from "react";
 
 type EditorProps = {
   value: Content;
