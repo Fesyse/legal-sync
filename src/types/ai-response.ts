@@ -2,6 +2,6 @@ export type AIResponse = {
   name: string;
   description: string;
   sentensePart: string;
-  recommendations: string;
+  recommendation: string;
   new: boolean;
 };

@@ -12,9 +12,17 @@ import { toast } from "sonner";
 import { AnimatePresence, motion } from "motion/react";
 import { Input } from "@/components/ui/input";
 export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
+  // usestate
+  const [title, setTitle] = useState<string>("");
+  const [open, setOpen] = useState("closed");
+  const [description, setDescription] = useState<Content>("");
+
+  // usequery
   const { data, isLoading } = api.technicalSpecification.getById.useQuery({
     id,
   });
+
+  // mutation
   const { mutate: update, isPending } =
     api.technicalSpecification.updateById.useMutation({
       onSuccess: (data) => {
@@ -24,25 +32,17 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
         toast.error(error.message);
       },
     });
-  const [description, setDescription] = useState<Content>("");
+  const { mutate: finish } =
+    api.technicalSpecification.finishTsById.useMutation({
+      onSuccess: (data) => {
+        toast.success("Техническое задание успешно завершено!");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
 
-  const [title, setTitle] = useState<string>("");
-  const [open, setOpen] = useState("closed");
-  const SaveData = async () => {
-    if (description && title) {
-      update({
-        description: description.toString(),
-        title,
-        id,
-      });
-      if (!isPending) {
-        setOpen("open");
-      }
-    } else {
-      toast.error("Не удалось сохранить данные");
-    }
-  };
-
+  // useeffect
   useEffect(() => {
     if (data?.description) {
       setDescription(data?.description);
@@ -51,6 +51,32 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
       setTitle(data?.title);
     }
   }, [data]);
+
+  // function
+  const saveData = async () => {
+    if (description && title) {
+      update({
+        description: description.toString(),
+        title,
+        id,
+      });
+      if (!isPending) {
+      }
+    } else {
+      toast.error("Не удалось сохранить данные");
+    }
+  };
+
+  const finishProject = async () => {
+    if (description && title) {
+      saveData();
+      finish({
+        id,
+      });
+    } else {
+      toast.error("Не удалось сохранить данные");
+    }
+  };
 
   return (
     <div className="flex h-full w-full gap-4">
@@ -88,24 +114,65 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
       </div>
       <div className="fixed bottom-4 flex w-[calc(100%-var(--sidebar-width))] justify-center">
         {open === "closed" && (
-          <Button
-            type="submit"
-            className="relative overflow-hidden"
-            variant="outline"
-            onClick={SaveData}
-          >
-            Найти нормативные документы по тексту
-            <BorderBeam
-              size={40}
-              initialOffset={20}
-              className="from-transparent via-purple-500 to-transparent"
-              transition={{
-                type: "spring",
-                stiffness: 60,
-                damping: 20,
+          <div className="flex gap-4">
+            <Button
+              type="submit"
+              className="relative overflow-hidden"
+              variant="outline"
+              onClick={() => {
+                saveData();
+                setOpen("open");
               }}
-            />
-          </Button>
+            >
+              Найти нормативные документы по тексту
+              <BorderBeam
+                size={40}
+                initialOffset={20}
+                className="from-transparent via-purple-500 to-transparent"
+                transition={{
+                  type: "spring",
+                  stiffness: 60,
+                  damping: 20,
+                }}
+              />
+            </Button>
+            <Button
+              type="submit"
+              className="relative overflow-hidden"
+              variant="outline"
+              onClick={saveData}
+            >
+              Сохранить
+              <BorderBeam
+                size={40}
+                initialOffset={20}
+                className="from-transparent via-purple-500 to-transparent"
+                transition={{
+                  type: "spring",
+                  stiffness: 60,
+                  damping: 20,
+                }}
+              />
+            </Button>
+            <Button
+              type="submit"
+              className="relative overflow-hidden"
+              variant="outline"
+              onClick={finishProject}
+            >
+              Завершить тех. задание
+              <BorderBeam
+                size={40}
+                initialOffset={20}
+                className="from-transparent via-purple-500 to-transparent"
+                transition={{
+                  type: "spring",
+                  stiffness: 60,
+                  damping: 20,
+                }}
+              />
+            </Button>
+          </div>
         )}
       </div>
     </div>

@@ -131,7 +131,7 @@ export function NpaList({
                   sentensePart={npa.sentensePart}
                   new={npa.new}
                   recommendations={
-                    npa.recommendations ? npa.recommendations : ""
+                    npa.recommendation ? npa.recommendation : ""
                   }
                 />
               ))}
