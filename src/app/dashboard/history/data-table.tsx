@@ -418,7 +418,7 @@ export function DataTable({
           <div className="text-muted-foreground hidden flex-1 items-center gap-2 text-sm lg:flex">
             {table.getFilteredSelectedRowModel()?.rows?.length} из{" "}
             {table.getFilteredRowModel()?.rows?.length} выбрано
-            {table.getFilteredSelectedRowModel()?.rows?.length && (
+            {!!table.getFilteredSelectedRowModel()?.rows?.length && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <button type="button">
