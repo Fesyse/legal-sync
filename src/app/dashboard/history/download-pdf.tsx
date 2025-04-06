@@ -18,8 +18,12 @@ type DownloadPDFProps = {
 };
 
 export const DownloadPDF: React.FC<DownloadPDFProps> = ({ data }) => {
+  const [trigger, fetchTechnicalSpecification] = useState(false);
   const { data: technicalSpecification } =
-    api.technicalSpecification.getById.useQuery({ id: data.id });
+    api.technicalSpecification.getById.useQuery(
+      { id: data.id },
+      { enabled: trigger },
+    );
 
   const [isConverting, setIsConverting] = useState(false);
   const [cssContent, setCssContent] = useState("");
@@ -88,6 +92,7 @@ export const DownloadPDF: React.FC<DownloadPDFProps> = ({ data }) => {
 
   const convertToPdf = async () => {
     setIsConverting(true);
+    fetchTechnicalSpecification(true);
 
     toast(<span>Начинаем создание PDF</span>, {
       description: "Пожалуйста, подождите, пока мы создаем ваш PDF...",
