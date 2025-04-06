@@ -7,7 +7,7 @@ import { type Content } from "@tiptap/react";
 import { useEffect, useState } from "react";
 import { Editor } from "./editor";
 import { NpaList } from "./npa-list";
-import { Skeletons } from "@/components/ui/skeletons";
+import { NpaListSkeleton } from "@/app/dashboard/task/[id]/npa-list-skeleton";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "motion/react";
 import { Input } from "@/components/ui/input";
@@ -100,7 +100,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
       </AnimatePresence>
       <div className="flex h-full w-full flex-col gap-5">
         {data === undefined ? (
-          <Skeletons key="skeletons" />
+          <NpaListSkeleton key="skeletons" />
         ) : (
           <div className="">
             <Input

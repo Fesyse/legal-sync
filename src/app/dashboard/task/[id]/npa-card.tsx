@@ -10,8 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
@@ -29,9 +27,6 @@ export function NpaCard({
   sentensePart,
   new: isNew,
   recommendations,
-  id,
-  setSelected,
-  selected,
 }: NpaSchema & {
   setSelected: (ids: string[]) => void;
   selected: string[];
@@ -41,6 +36,7 @@ export function NpaCard({
     { enabled: false },
   );
   const [isRecommendationsOpen, setIsRecommendationsOpen] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

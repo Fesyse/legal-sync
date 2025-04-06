@@ -28,13 +28,29 @@ export const authSignUpSchema = z.object({
 });
 
 export const npaSchema = z.object({
+  id: z.string(),
   name: z.string(),
   description: z.string(),
   sentensePart: z.string(),
   new: z.boolean().default(false), // анонс или нет
   recommendations: z.string(),
-  id: z.string(),
 });
+
+export const filterNpaSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  sentensePart: z.string(),
+  new: z.boolean(),
+});
+export const defaultNpaFilters: FilterNpaSchema = {
+  name: "",
+  description: "",
+  sentensePart: "",
+  new: false,
+};
+
+export type FilterNpaSchema = z.infer<typeof filterNpaSchema>;
+
 export const TYPE = ["announced", "default"] as const;
 export const technicalSpecificationSchema = z.object({
   id: z.string(),

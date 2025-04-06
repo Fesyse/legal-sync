@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Skeletons } from "@/components/ui/skeletons";
 import {
   Tooltip,
   TooltipContent,
@@ -14,7 +13,9 @@ import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { NpaCard } from "./npa-card";
 import { SearchForm } from "./search-form";
-import { log } from "console";
+import { type FilterNpaSchema } from "@/lib/schemas";
+import { NpaListSkeleton } from "./npa-list-skeleton";
+import { filterNpa } from "@/lib/utils";
 
 // const data = [
 //   {
@@ -46,6 +47,15 @@ export function NpaList({
   description: string;
   title: string;
 }) {
+  const [filters, setFilters] = useState<FilterNpaSchema | undefined>();
+
+  const [selected, setSelected] = useState<string[]>([]);
+  const { data: recommendations, refetch: getRecommendations } =
+    api.npa.getRecommendationsForTSByManyNPAs.useQuery(
+      { npas: selected, description },
+      { enabled: false },
+    );
+
   const {
     data,
     isLoading: isInitialLoading,
@@ -59,13 +69,6 @@ export function NpaList({
   );
 
   const isLoading = isRefetching || isInitialLoading;
-
-  const [selected, setSelected] = useState<string[]>([]);
-  const { data: recommendations, refetch: getRecommendations } =
-    api.npa.getRecommendationsForTSByManyNPAs.useQuery(
-      { npas: selected, description },
-      { enabled: false },
-    );
   //   // TODO: Подумать над получением рекомендаций из AI (Возможность выбрать документы, на соответствие которым пользователь
   // хотел бы проверить ТЗ. )
 
@@ -109,10 +112,13 @@ export function NpaList({
           </Tooltip>
         </TooltipProvider>
       </div>
-      <SearchForm />
+
+      <SearchForm filters={filters} setFilters={setFilters} />
+
       <AnimatePresence mode="wait">
-        {isLoading && <Skeletons key="skeletons" />}
-        {!!data?.length && !isLoading && (
+        {isLoading ? (
+          <NpaListSkeleton key="skeletons" />
+        ) : data?.length ? (
           <motion.div
             animate={{ opacity: 1 }}
             initial={{ opacity: 0 }}
@@ -120,25 +126,30 @@ export function NpaList({
             key={"npa-list"}
           >
             <ul className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-              {data.map((npa) => (
-                <NpaCard
-                  selected={selected}
-                  setSelected={setSelected}
-                  key={npa.name}
-                  id={npa.name}
-                  name={npa.name}
-                  description={npa.description}
-                  sentensePart={npa.sentensePart}
-                  new={npa.new}
-                  recommendations={
-                    npa.recommendation ? npa.recommendation : ""
-                  }
-                />
-              ))}
+              {data
+                .filter((npa) => {
+                  if (!filters) return true;
+
+                  return filterNpa(filters, npa);
+                })
+                .map((npa) => (
+                  <NpaCard
+                    selected={selected}
+                    setSelected={setSelected}
+                    key={npa.name}
+                    id={npa.name}
+                    name={npa.name}
+                    description={npa.description}
+                    sentensePart={npa.sentensePart}
+                    new={npa.new}
+                    recommendations={
+                      npa.recommendation ? npa.recommendation : ""
+                    }
+                  />
+                ))}
             </ul>
           </motion.div>
-        )}
-        {!data?.length && (
+        ) : (
           <motion.div
             animate={{ opacity: 1 }}
             initial={{ opacity: 0 }}
@@ -165,7 +176,7 @@ export function NpaList({
         )}
       </AnimatePresence>
       <AnimatePresence mode="wait">
-        {!!selected?.length && (
+        {selected.length ? (
           <motion.div
             exit={{ bottom: -100, opacity: 0, pointerEvents: "none" }}
             initial={{ bottom: -100, opacity: 0, pointerEvents: "none" }}
@@ -184,7 +195,7 @@ export function NpaList({
               Проверить ТЗ на выбранные документы
             </Button>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );

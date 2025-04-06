@@ -15,7 +15,7 @@ const skeletonVariants = {
   }),
 };
 
-export function Skeletons() {
+export function NpaListSkeleton() {
   return (
     <motion.div
       initial={{ opacity: 0 }}

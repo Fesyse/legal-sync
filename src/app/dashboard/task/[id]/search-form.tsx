@@ -10,30 +10,39 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { npaSchema, type NpaSchema } from "@/lib/schemas";
+import {
+  defaultNpaFilters,
+  filterNpaSchema,
+  type FilterNpaSchema,
+} from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Filter, Search } from "lucide-react";
+import { Filter, X } from "lucide-react";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-export const SearchForm = () => {
-  const form = useForm<NpaSchema>({
-    resolver: zodResolver(npaSchema),
-    defaultValues: {
-      description: "",
-      name: "",
-      sentensePart: "",
-      new: false,
-      recommendations: "",
-    },
+
+type SearchFormProps = {
+  filters: FilterNpaSchema | undefined;
+  setFilters: (filters: FilterNpaSchema | undefined) => void;
+};
+
+export const SearchForm: React.FC<SearchFormProps> = ({
+  filters,
+  setFilters,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const form = useForm<FilterNpaSchema>({
+    resolver: zodResolver(filterNpaSchema),
+    defaultValues: defaultNpaFilters,
   });
 
-  const onSubmit: SubmitHandler<NpaSchema> = (data) => {
-    // TODO: ДАЛЬЕ САМИ РЕШАЙТЕ ЕПТА
+  const onSubmit: SubmitHandler<FilterNpaSchema> = (data) => {
+    setFilters(data);
   };
-  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <Button
+        className="absolute left-16"
         variant={"outline"}
         size={"icon"}
         type="button"
@@ -56,7 +65,7 @@ export const SearchForm = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Название"
+                    placeholder="Название..."
                     className={
                       form.formState.errors.name ? "border-red-500" : ""
                     }
@@ -74,14 +83,39 @@ export const SearchForm = () => {
           />
           <FormField
             control={form.control}
-            name="name"
+            name="description"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Описание</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Описание"
+                    placeholder="Описание..."
+                    className={
+                      form.formState.errors.name ? "border-red-500" : ""
+                    }
+                  />
+                </FormControl>
+                <FormMessage>
+                  {form.formState.errors.name && (
+                    <span className="text-red-500">
+                      {form.formState.errors.name.message}
+                    </span>
+                  )}
+                </FormMessage>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="sentensePart"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Отрывок из ТЗ</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Отрывок из ТЗ..."
                     className={
                       form.formState.errors.name ? "border-red-500" : ""
                     }
@@ -123,9 +157,22 @@ export const SearchForm = () => {
               </FormItem>
             )}
           />
-          <div className="flex justify-end">
-            <Button className="" size={"icon"} type="submit">
-              <Search />
+
+          <div className="flex justify-end gap-2">
+            {filters ? (
+              <Button
+                size="icon"
+                variant="secondary"
+                onClick={() => {
+                  setFilters(undefined);
+                  form.reset();
+                }}
+              >
+                <X />
+              </Button>
+            ) : null}
+            <Button type="submit">
+              Отфильтровать <Filter />
             </Button>
           </div>
         </form>
