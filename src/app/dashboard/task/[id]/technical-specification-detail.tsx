@@ -1,15 +1,15 @@
 "use client";
 
+import { NpaListSkeleton } from "@/app/dashboard/task/[id]/npa-list-skeleton";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
 import { type Content } from "@tiptap/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Editor } from "./editor";
 import { NpaList } from "./npa-list";
-import { NpaListSkeleton } from "@/app/dashboard/task/[id]/npa-list-skeleton";
-import { toast } from "sonner";
-import { AnimatePresence, motion } from "motion/react";
 
 export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
   const [open, setOpen] = useState("closed");
@@ -74,7 +74,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
         {open === "open" && (
           <motion.div
             key={"npa-list-wrapper"}
-            className="bg-background overflow-hidden rounded-md"
+            className="bg-background h-full overflow-hidden rounded-md"
             initial={{ width: 0 }}
             animate={{ width: open === "open" ? "100%" : "0%" }}
             exit={{ width: 0 }}
