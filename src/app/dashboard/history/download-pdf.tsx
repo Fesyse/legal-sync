@@ -101,7 +101,7 @@ export const DownloadPDF: React.FC<DownloadPDFProps> = ({ data }) => {
   };
 
   useEffect(() => {
-    if (!technicalSpecification) return;
+    if (!technicalSpecification || !isConverting) return;
 
     setTimeout(async () => {
       try {
@@ -296,7 +296,7 @@ export const DownloadPDF: React.FC<DownloadPDFProps> = ({ data }) => {
         setIsConverting(false);
       }
     }, 100); // Small delay to allow UI update
-  }, [technicalSpecification]);
+  }, [technicalSpecification, isConverting]);
 
   return (
     <DropdownMenuItem onClick={convertToPdf}>Скачать в PDF</DropdownMenuItem>
