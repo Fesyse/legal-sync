@@ -7,7 +7,12 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 import { createCuid, technicalSpecification } from "@/server/db/schema";
+<<<<<<< HEAD
 import { desc, eq } from "drizzle-orm";
+=======
+import { eq } from "drizzle-orm";
+import html2pdf from "html-to-pdf-js";
+>>>>>>> baa8ee15af0f2775198429230296d7d1863d427b
 // import { messages, threads } from "@/server/db/schema";
 
 export const technicalSpecificationRouter = createTRPCRouter({

@@ -26,6 +26,7 @@ export const SearchForm = () => {
       recommendations: "",
     },
   });
+
   const onSubmit: SubmitHandler<NpaSchema> = (data) => {
     // TODO: ДАЛЬЕ САМИ РЕШАЙТЕ ЕПТА
   };
@@ -36,7 +37,7 @@ export const SearchForm = () => {
         variant={"outline"}
         size={"icon"}
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen((prev) => !prev)}
       >
         <Filter />
       </Button>

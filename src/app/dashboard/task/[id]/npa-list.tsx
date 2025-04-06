@@ -75,7 +75,7 @@ export function NpaList({
   }, []);
 
   return (
-    <div className="relative inline-flex min-h-[100vh] w-full min-w-[400px] flex-col gap-5 p-4 lg:min-w-[800px]">
+    <div className="relative inline-flex min-h-[100vh] w-full max-w-[400px] flex-col gap-5 p-4 lg:max-w-[800px]">
       <div className="flex w-full justify-between gap-5">
         <TooltipProvider>
           <Tooltip>
