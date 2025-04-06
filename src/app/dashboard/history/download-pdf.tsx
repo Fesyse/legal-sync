@@ -36,8 +36,6 @@ export const DownloadPDF: React.FC<DownloadPDFProps> = ({ data }) => {
         // Process and combine CSS
         let combinedCss = cssTexts.join("\n");
 
-        console.log(combinedCss);
-
         // Set the processed CSS
         setCssContent(combinedCss);
       } catch (error) {

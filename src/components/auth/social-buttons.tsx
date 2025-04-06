@@ -25,7 +25,7 @@ export const SocialButtons = () => {
         <Icons.google />
         Google
       </Button>
-      <Button variant="outline" type="button" onClick={signIn("vk")}>
+      <Button variant="outline" type="button" onClick={signIn("vk")} disabled>
         <Icons.vk />
         VK
       </Button>
