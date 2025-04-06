@@ -1,5 +1,3 @@
-@reference "../../../styles/globals.css"
-
 @import "./partials/code.css";
 @import "./partials/placeholder.css";
 @import "./partials/lists.css";
@@ -99,23 +97,29 @@
 }
 
 .minimal-tiptap-editor .ProseMirror {
-  @apply flex max-w-full cursor-text flex-col;
-  @apply z-0 outline-0;
+  display: flex;
+  max-width: 100%;
+  cursor: text;
+  flex-direction: column;
+  z-index: 0;
+  outline: 0;
 }
 
 .minimal-tiptap-editor .ProseMirror > div.editor {
-  @apply block flex-1 whitespace-pre-wrap;
+  display: block;
+  flex: 1;
+  white-space: pre-wrap;
 }
 
 .minimal-tiptap-editor .ProseMirror .block-node:not(:last-child),
 .minimal-tiptap-editor .ProseMirror .list-node:not(:last-child),
 .minimal-tiptap-editor .ProseMirror .text-node:not(:last-child) {
-  @apply mb-2.5;
+  margin-bottom: 2.5rem;
 }
 
 .minimal-tiptap-editor .ProseMirror ol,
 .minimal-tiptap-editor .ProseMirror ul {
-  @apply pl-6;
+  padding-left: 1.5rem;
 }
 
 .minimal-tiptap-editor .ProseMirror blockquote,
@@ -124,68 +128,85 @@
 .minimal-tiptap-editor .ProseMirror p,
 .minimal-tiptap-editor .ProseMirror pre,
 .minimal-tiptap-editor .ProseMirror ul {
-  @apply m-0;
+  margin: 0;
 }
 
 .minimal-tiptap-editor .ProseMirror li {
-  @apply leading-7;
+  line-height: 1.7;
 }
 
 .minimal-tiptap-editor .ProseMirror p {
-  @apply break-words;
+  word-break: break-word;
 }
 
 .minimal-tiptap-editor .ProseMirror li .text-node:has(+ .list-node),
 .minimal-tiptap-editor .ProseMirror li > .list-node,
 .minimal-tiptap-editor .ProseMirror li > .text-node,
 .minimal-tiptap-editor .ProseMirror li p {
-  @apply mb-0;
+  margin-bottom: 0;
 }
 
 .minimal-tiptap-editor .ProseMirror blockquote {
-  @apply relative pl-3.5;
+  position: relative;
+  padding-left: 0.875rem;
 }
 
 .minimal-tiptap-editor .ProseMirror blockquote::before,
 .minimal-tiptap-editor .ProseMirror blockquote.is-empty::before {
-  @apply bg-accent-foreground/15 absolute top-0 bottom-0 left-0 h-full w-1 rounded-sm content-[''];
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background-color: var(--mt-accent-foreground);
+  opacity: 0.15;
+  border-radius: 0.25rem;
 }
 
 .minimal-tiptap-editor .ProseMirror hr {
-  @apply my-3 h-0.5 w-full border-none bg-[var(--mt-hr)];
+  margin: 0.75rem 0;
+  height: 0.5px;
+  width: 100%;
+  border: none;
+  background-color: var(--mt-hr);
 }
 
 .minimal-tiptap-editor .ProseMirror-focused hr.ProseMirror-selectednode {
-  @apply outline-muted-foreground rounded-full outline outline-2 outline-offset-1;
+  outline: var(--mt-muted-foreground) solid 2px;
+  outline-offset: 1px;
+  border-radius: 0.5rem;
 }
 
 .minimal-tiptap-editor .ProseMirror .ProseMirror-gapcursor {
-  @apply pointer-events-none absolute hidden;
+  pointer-events: none;
+  position: absolute;
+  display: none;
 }
 
 .minimal-tiptap-editor .ProseMirror .ProseMirror-hideselection {
-  @apply caret-transparent;
+  caret-color: transparent;
 }
 
 .minimal-tiptap-editor .ProseMirror.resize-cursor {
-  @apply cursor-col-resize;
+  cursor: col-resize;
 }
 
 .minimal-tiptap-editor .ProseMirror .selection {
-  @apply inline-block;
+  display: inline-block;
 }
 
 .minimal-tiptap-editor .ProseMirror s span {
-  @apply line-through;
+  text-decoration: line-through;
 }
 
 .minimal-tiptap-editor .ProseMirror .selection,
 .minimal-tiptap-editor .ProseMirror *::selection,
 ::selection {
-  @apply bg-accent;
+  background-color: var(--mt-accent);
 }
 
-/* Override native selection when custom selection is present */
 .minimal-tiptap-editor .ProseMirror .selection::selection {
-  background: transparent;
+  background-color: transparent;
 }

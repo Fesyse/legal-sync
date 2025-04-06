@@ -1,7 +1,5 @@
-@reference "../../../../styles/globals.css"
-
 .minimal-tiptap-editor .ProseMirror ol {
-  @apply list-decimal;
+  list-style: decimal;
 }
 
 .minimal-tiptap-editor .ProseMirror ol ol {

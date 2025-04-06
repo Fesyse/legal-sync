@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { RiGeminiFill } from "react-icons/ri";
 import { DashboardNavUser } from "./nav-user";
 import { useSidebarNav } from "@/lib/sidebar";
 import { Icons } from "@/components/ui/icons";

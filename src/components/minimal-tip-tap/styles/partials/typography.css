@@ -1,41 +1,54 @@
-@reference "../../../../styles/globals.css"
-
 .minimal-tiptap-editor .ProseMirror .heading-node {
-  @apply relative font-semibold;
+  position: relative;
+  font-weight: 600;
 }
 
 .minimal-tiptap-editor .ProseMirror .heading-node:first-child {
-  @apply mt-0;
+  margin-top: 0;
 }
 
 .minimal-tiptap-editor .ProseMirror h1 {
-  @apply mt-[46px] mb-4 text-[1.375rem] leading-7 tracking-[-0.004375rem];
+  margin-top: 2.875rem;
+  margin-bottom: 1rem;
+  font-size: 1.375rem;
+  line-height: 1.7;
+  letter-spacing: -0.004375rem;
 }
 
 .minimal-tiptap-editor .ProseMirror h2 {
-  @apply mt-8 mb-3.5 text-[1.1875rem] leading-7 tracking-[0.003125rem];
+  margin-top: 2rem;
+  margin-bottom: 0.875rem;
+  font-size: 1.1875rem;
+  line-height: 1.7;
+  letter-spacing: 0.003125rem;
 }
 
 .minimal-tiptap-editor .ProseMirror h3 {
-  @apply mt-6 mb-3 text-[1.0625rem] leading-6 tracking-[0.00625rem];
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  letter-spacing: 0.00625rem;
 }
 
 .minimal-tiptap-editor .ProseMirror h4 {
-  @apply mt-4 mb-2 text-[0.9375rem] leading-6;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
 }
 
 .minimal-tiptap-editor .ProseMirror h5 {
-  @apply mt-4 mb-2 text-sm;
-}
-
-.minimal-tiptap-editor .ProseMirror h5 {
-  @apply mt-4 mb-2 text-sm;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
 }
 
 .minimal-tiptap-editor .ProseMirror a.link {
-  @apply text-primary cursor-pointer;
+  color: var(--mt-primary);
+  cursor: pointer;
 }
 
 .minimal-tiptap-editor .ProseMirror a.link:hover {
-  @apply underline;
+  text-decoration: underline;
 }

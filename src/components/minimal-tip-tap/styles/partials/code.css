@@ -1,21 +1,33 @@
-@reference "../../../../styles/globals.css"
-
 .minimal-tiptap-editor .ProseMirror code.inline {
-  @apply rounded-sm border border-[var(--mt-code-color)] bg-[var(--mt-code-background)] px-1 py-0.5 text-sm;
+  border-radius: 0.25rem;
+  border: 1px solid var(--mt-code-color);
+  background-color: var(--mt-code-background);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
 }
 
 .minimal-tiptap-editor .ProseMirror pre {
-  @apply relative overflow-auto rounded-sm border font-mono text-sm;
-  @apply border-[var(--mt-pre-border)] bg-[var(--mt-pre-background)] text-[var(--mt-pre-color)];
-  @apply text-left hyphens-none whitespace-pre;
+  position: relative;
+  overflow: auto;
+  border-radius: 0.25rem;
+  border: 1px solid var(--mt-pre-border);
+  background-color: var(--mt-pre-background);
+  color: var(--mt-pre-color);
+  font-family: monospace;
+  text-align: left;
+  hyphens: none;
+  white-space: pre;
 }
 
 .minimal-tiptap-editor .ProseMirror code {
-  @apply leading-[1.7em] break-words;
+  line-height: 1.7;
+  word-break: break-word;
 }
 
 .minimal-tiptap-editor .ProseMirror pre code {
-  @apply block overflow-x-auto p-3.5;
+  display: block;
+  overflow-x: auto;
+  padding: 0.875rem;
 }
 
 .minimal-tiptap-editor .ProseMirror pre {
@@ -79,10 +91,10 @@
   }
 
   .hljs-emphasis {
-    @apply italic;
+    font-style: italic;
   }
 
   .hljs-strong {
-    @apply font-bold;
+    font-weight: bold;
   }
 }
