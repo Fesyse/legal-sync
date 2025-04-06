@@ -7,7 +7,7 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 import { createCuid, technicalSpecification } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 // import { messages, threads } from "@/server/db/schema";
 
 export const technicalSpecificationRouter = createTRPCRouter({
@@ -89,5 +89,42 @@ export const technicalSpecificationRouter = createTRPCRouter({
       }
 
       return response;
+    }),
+
+  updateById: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+        description: z.string(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { id, title, description } = input;
+      const existingTechnicalSpecification =
+        await ctx.db.query.technicalSpecification.findFirst({
+          where: eq(technicalSpecification.id, id),
+        });
+      if (!existingTechnicalSpecification) {
+        throw new Error("Техническое задание не найдено");
+      }
+      if (existingTechnicalSpecification.userId !== ctx?.session?.user?.id!) {
+        throw new Error(
+          "У вас нет прав для обновления этого технического задания",
+        );
+      }
+      await ctx.db
+        .update(technicalSpecification)
+        .set({
+          title,
+          description,
+        })
+        .where(eq(technicalSpecification.id, id));
+
+      return {
+        success: true,
+        code: 204,
+        message: "Техническое задание успешно обновлено",
+      };
     }),
 });

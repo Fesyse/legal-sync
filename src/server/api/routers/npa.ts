@@ -14,11 +14,10 @@ import { eq } from "drizzle-orm";
 
 export const npaRouter = createTRPCRouter({
   getAllByTS: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input: { id } }) => {
-      return await GetNpaRules(id);
+    .input(z.object({ description: z.string(), title: z.string() }))
+    .query(async ({ ctx, input: { description, title } }) => {
+      return await GetNpaRules(description, title);
     }),
-
   getNpaInfoById: protectedProcedure
     .input(
       z.object({
@@ -48,15 +47,10 @@ export const npaRouter = createTRPCRouter({
     .input(
       z.object({
         npas: z.array(z.string()),
-        tsId: z.string(),
+        description: z.string(),
       }),
     )
-    .query(async ({ ctx, input: { npas, tsId } }) => {
-      const data = await ctx.db.query.technicalSpecification.findFirst({
-        where: eq(technicalSpecification.id, tsId),
-      });
-      if (!data)
-        return { code: "404", message: "Technical specification not found" };
-      return await GetMoreRecommendationsByManyNpas(npas, data?.description!);
+    .query(async ({ ctx, input: { npas, description } }) => {
+      return await GetMoreRecommendationsByManyNpas(npas, description);
     }),
 });

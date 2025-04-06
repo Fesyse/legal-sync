@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Skeletons } from "@/components/ui/skeletons";
 import {
@@ -13,6 +14,7 @@ import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { NpaCard } from "./npa-card";
 import { SearchForm } from "./search-form";
+import { log } from "console";
 
 // const data = [
 //   {
@@ -36,11 +38,13 @@ import { SearchForm } from "./search-form";
 // ];
 
 export function NpaList({
-  id,
+  description,
+  title,
   setOpen,
 }: {
-  id: string;
   setOpen: (open: string) => void;
+  description: string;
+  title: string;
 }) {
   const {
     data,
@@ -48,7 +52,7 @@ export function NpaList({
     refetch,
     isRefetching,
   } = api.npa.getAllByTS.useQuery(
-    { id },
+    { description, title },
     {
       enabled: false,
     },
@@ -59,7 +63,7 @@ export function NpaList({
   const [selected, setSelected] = useState<string[]>([]);
   const { data: recommendations, refetch: getRecommendations } =
     api.npa.getRecommendationsForTSByManyNPAs.useQuery(
-      { npas: selected, tsId: id },
+      { npas: selected, description },
       { enabled: false },
     );
   //   // TODO: Подумать над получением рекомендаций из AI (Возможность выбрать документы, на соответствие которым пользователь
@@ -67,6 +71,7 @@ export function NpaList({
 
   useEffect(() => {
     refetch();
+    console.log(data);
   }, []);
 
   return (
@@ -119,8 +124,15 @@ export function NpaList({
                 <NpaCard
                   selected={selected}
                   setSelected={setSelected}
-                  key={npa.id}
-                  {...npa}
+                  key={npa.name}
+                  id={npa.name}
+                  name={npa.name}
+                  description={npa.description}
+                  sentensePart={npa.sentensePart}
+                  new={npa.new}
+                  recommendations={
+                    npa.recommendations ? npa.recommendations : ""
+                  }
                 />
               ))}
             </ul>
