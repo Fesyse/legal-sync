@@ -13,14 +13,14 @@ export const useHotkeys = () => {
     {
       action: () => void push("/dashboard/ask"),
       symbol: "⌘",
-      key: "Control+i",
+      key: "Ctrl+I",
       text: "Спросить AI",
       id: "wefkwiefkjnwefjnoi",
     },
     {
       action: () => void push("/dashboard"),
       symbol: "⌘",
-      key: "Control+h",
+      key: "Ctrl+H",
       text: "Перейти на дашборд",
       id: "wekfwenmijfewjfuwe9238",
     },
