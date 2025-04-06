@@ -74,6 +74,7 @@
     "html2canvas-pro": "^1.5.8",
     "html2pdf.js": "^0.10.3",
     "jspdf": "^3.0.1",
+    "lodash.debounce": "^4.0.8",
     "lowlight": "^3.3.0",
     "lucide-react": "^0.487.0",
     "motion": "^12.6.3",
@@ -98,6 +99,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.0.15",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.14.10",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

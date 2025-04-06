@@ -105,8 +105,8 @@ export const technicalSpecificationRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        title: z.string(),
-        description: z.string(),
+        title: z.string().optional(),
+        description: z.string().optional(),
       }),
     )
     .mutation(async ({ input, ctx }) => {

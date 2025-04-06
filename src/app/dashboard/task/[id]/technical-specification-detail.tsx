@@ -10,11 +10,9 @@ import { NpaList } from "./npa-list";
 import { NpaListSkeleton } from "@/app/dashboard/task/[id]/npa-list-skeleton";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "motion/react";
-import { Input } from "@/components/ui/input";
 
 export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
   // usestate
-  const [title, setTitle] = useState<string>("");
   const [open, setOpen] = useState("closed");
   const [description, setDescription] = useState<Content>("");
 
@@ -49,17 +47,13 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
     if (technicalSpecification?.description) {
       setDescription(technicalSpecification?.description);
     }
-    if (technicalSpecification?.title) {
-      setTitle(technicalSpecification?.title);
-    }
   }, [technicalSpecification]);
 
   // function
   const saveData = async () => {
-    if (description && title) {
+    if (description) {
       update({
         description: description.toString(),
-        title,
         id,
       });
       if (!isPending) {
@@ -70,7 +64,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
   };
 
   const finishProject = async () => {
-    if (description && title) {
+    if (description) {
       saveData();
       finish({
         id,
@@ -95,7 +89,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
             <NpaList
               setOpen={setOpen}
               description={description!.toString()}
-              title={title.toString()}
+              title={technicalSpecification!.title.toString()}
             />
           </motion.div>
         )}
@@ -104,14 +98,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
         {technicalSpecification === undefined ? (
           <NpaListSkeleton key="skeletons" />
         ) : (
-          <div className="">
-            <Input
-              value={title}
-              className="w-full border-none text-center text-3xl font-bold"
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <Editor value={description} setValue={setDescription} />
-          </div>
+          <Editor value={description} setValue={setDescription} />
         )}
       </div>
       <div className="fixed bottom-4 flex w-[calc(100%-var(--sidebar-width))] justify-center">
