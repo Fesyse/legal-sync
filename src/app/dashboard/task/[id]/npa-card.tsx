@@ -86,14 +86,16 @@ export function NpaCard({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="flex-[1_1_auto]">
-          <div className="bg-muted rounded-md p-3">
-            <h4 className="mb-1 text-sm font-medium">
-              Часть предложения из ТЗ:
-            </h4>
-            <p className="text-sm italic">"{sentensePart}"</p>
-          </div>
-        </CardContent>
+        {sentensePart ? (
+          <CardContent className="flex-[1_1_auto]">
+            <div className="bg-muted rounded-md p-3">
+              <h4 className="mb-1 text-sm font-medium">
+                Часть предложения из ТЗ:
+              </h4>
+              <p className="text-sm italic">"{sentensePart}"</p>
+            </div>
+          </CardContent>
+        ) : null}
 
         <CardFooter className="flex flex-col items-start gap-7 border-t pt-4">
           <div className="w-full">
