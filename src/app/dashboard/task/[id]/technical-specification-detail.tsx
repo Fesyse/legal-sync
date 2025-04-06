@@ -74,7 +74,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
         {open === "open" && (
           <motion.div
             key={"npa-list-wrapper"}
-            className="bg-background min-h-[100vh] overflow-hidden rounded-md"
+            className="bg-background overflow-hidden rounded-md"
             initial={{ width: 0 }}
             animate={{ width: open === "open" ? "100%" : "0%" }}
             exit={{ width: 0 }}
