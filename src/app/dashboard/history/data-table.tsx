@@ -71,6 +71,7 @@ import type { TechnicalSpecificationSchema } from "@/lib/schemas";
 import { api } from "@/trpc/react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { DownloadPDF } from "./download-pdf";
 
 const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
   {
@@ -156,7 +157,6 @@ const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
       </Badge>
     ),
   },
-
   {
     id: "actions",
     cell: ({ row }) => {
@@ -170,6 +170,9 @@ const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
           toast.error(error.message);
         },
       });
+
+      row.original;
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -188,10 +191,7 @@ const columns: ColumnDef<TechnicalSpecificationSchema>[] = [
                 Редактировать
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              Скачать в PDF{" "}
-              <span className="text-foreground/60 text-xs">(в разработке)</span>
-            </DropdownMenuItem>
+            <DownloadPDF data={row.original} />
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
