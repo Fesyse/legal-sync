@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { GetMoreRecommendations } from "@/ai-tunnel/get-more-recommendations";
-import { GetMoreRecommendationsByManyNpas } from "@/ai-tunnel/get-more-recommendations-by-many-npas";
-import { GetNpaDetails } from "@/ai-tunnel/get-npa-details";
-import { GetNpaRules } from "@/ai-tunnel/get-npa-rules";
+import { GetMoreRecommendations } from "@/lib/ai-tunnel/get-more-recommendations";
+import { GetMoreRecommendationsByManyNpas } from "@/lib/ai-tunnel/get-more-recommendations-by-many-npas";
+import { GetNpaDetails } from "@/lib/ai-tunnel/get-npa-details";
+import { GetNpaRules } from "@/lib/ai-tunnel/get-npa-rules";
 import {
   createTRPCRouter,
   protectedProcedure,

@@ -1,4 +1,4 @@
-import { client } from "@/ai-tunnel/setup";
+import { client } from "@/lib/ai-tunnel/setup";
 import { auth } from "@/server/auth";
 import { type CoreMessage } from "ai";
 import { headers } from "next/headers";
@@ -32,9 +32,7 @@ export async function POST(req: NextRequest) {
 
   return new Response(JSON.stringify(data), {
     headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      Connection: "keep-alive",
-      "Cache-Control": "no-cache, no-transform",
+      "Content-Type": "application/json",
     },
   });
 }
