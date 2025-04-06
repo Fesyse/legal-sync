@@ -111,7 +111,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
               <BorderBeam
                 size={40}
                 initialOffset={20}
-                className="from-transparent via-purple-500 to-transparent"
+                className="from-transparent via-red-500 to-transparent"
                 transition={{
                   type: "spring",
                   stiffness: 60,
@@ -147,7 +147,7 @@ export const TechnicalSpecificationDetail = ({ id }: { id: string }) => {
               <BorderBeam
                 size={40}
                 initialOffset={20}
-                className="from-transparent via-purple-500 to-transparent"
+                className="from-transparent via-orange-500 to-transparent"
                 transition={{
                   type: "spring",
                   stiffness: 60,
