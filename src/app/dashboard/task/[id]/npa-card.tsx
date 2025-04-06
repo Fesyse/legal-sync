@@ -18,10 +18,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import type { NpaSchema } from "@/lib/schemas";
+import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { motion } from "framer-motion";
 import { MoreVertical } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function NpaCard({
   name,
@@ -30,23 +31,39 @@ export function NpaCard({
   new: isNew,
   recommendations,
   id,
-  setSelected,
-  selected,
 }: NpaSchema & {
   setSelected: (ids: string[]) => void;
   selected: string[];
 }) {
-  const { data, refetch } = api.npa.getRecommendationsForTS.useQuery(
+  const {
+    data: detailRecommendations,
+    refetch: getRecommendations,
+    isLoading: isLoadingRecommendations,
+  } = api.npa.getRecommendationsForTS.useQuery(
     { npa: name, description: description },
     { enabled: false },
   );
+  const {
+    data: detnpa,
+    refetch: getNpa,
+    isLoading: isnpaLoading,
+  } = api.npa.getNpaInfoById.useQuery({ npa: name }, { enabled: false });
   const [isRecommendationsOpen, setIsRecommendationsOpen] = useState(false);
+  useEffect(() => {
+    getRecommendations();
+    getNpa();
+  }, []);
+  const onGetDetailRecommendations = async () => {
+    setIsRecommendationsOpen(true);
+  };
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-md"
+      className={cn("w-full transition-all", {
+        "col-span-2": isRecommendationsOpen,
+      })}
     >
       <Card className="relative overflow-hidden">
         <CardHeader>
@@ -66,7 +83,7 @@ export function NpaCard({
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  onClick={() => refetch()}
+                  onClick={() => getRecommendations()}
                   variant="ghost"
                   size="icon"
                   className="h-8 w-8"
@@ -78,13 +95,13 @@ export function NpaCard({
               <PopoverContent side="right" align="start" className="w-80">
                 <div className="space-y-2">
                   <h4 className="mb-4 font-medium">Полные рекомендации</h4>
-                  {data ? (
+                  {detailRecommendations ? (
                     <ul className="list-disc">
                       <TypingAnimation
                         duration={30}
                         className="text-foreground/70 p-0 text-sm leading-5 font-normal"
                       >
-                        {data}
+                        {detailRecommendations}
                       </TypingAnimation>
                     </ul>
                   ) : (
@@ -97,8 +114,12 @@ export function NpaCard({
             </Popover>
           </div>
           <CardDescription className="mt-2">
-            {description.substring(0, 100) +
-              (description.length > 100 ? "..." : "")}
+            {isRecommendationsOpen
+              ? isnpaLoading
+                ? "Загрузка..."
+                : detnpa
+              : description.substring(0, 100) +
+                (description.length > 100 ? "..." : "")}
           </CardDescription>
         </CardHeader>
 
@@ -113,17 +134,29 @@ export function NpaCard({
 
         <CardFooter className="flex flex-col items-start gap-7 border-t pt-4">
           <div className="w-full">
-            <h4 className="mb-1 text-sm font-medium">Краткие рекомендации:</h4>
+            <h4 className="mb-1 text-sm font-medium">
+              {isRecommendationsOpen
+                ? "Рекомендации:"
+                : "Краткие рекомендации:"}
+            </h4>
             <p className="text-muted-foreground text-sm">
-              {recommendations
-                ? recommendations.substring(0, 100) +
-                  (recommendations.length > 100 ? "..." : "")
-                : "Нет рекомендаций"}
+              {isRecommendationsOpen
+                ? isLoadingRecommendations
+                  ? "Загрузка..."
+                  : detailRecommendations
+                : recommendations
+                  ? recommendations.substring(0, 100) +
+                    (recommendations.length > 100 ? "..." : "")
+                  : "Нет рекомендаций"}
             </p>
           </div>
-          <Button onClick={() => setIsRecommendationsOpen(true)}>
-            Узнать больше
-          </Button>
+          {isRecommendationsOpen ? (
+            <Button onClick={() => setIsRecommendationsOpen(false)}>
+              Скрыть
+            </Button>
+          ) : (
+            <Button onClick={onGetDetailRecommendations}>Узнать больше</Button>
+          )}
         </CardFooter>
       </Card>
     </motion.div>
