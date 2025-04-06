@@ -1,22 +1,9 @@
 <svg
-	fill="currentColor"
+	fill="white"
 	viewBox="0 0 40 20"
 	xmlns="http://www.w3.org/2000/svg"
 	aria-hidden="true"
 >
-<style>
-circle, path {
-	stroke: #000;
-	fill: #000;	
-}
-
-@media (prefers-color-scheme: dark) {
-	path {
-		stroke: #FFF;
-		fill: #FFF;
-	}
-}
-</style>
 <path d="M5 0H9V16H20V20H5V0Z"></path>
 <path d="M22 4C22 1.8 23.8 0 26 0H36C38.2 0 40 1.8 40 4V6H36V4H26V8L36 12V16C36 18.2 34.2 20 32 20H22C19.8 20 18 18.2 18 16V14H22V16H32V12L22 8V4Z"></path>
 </svg>

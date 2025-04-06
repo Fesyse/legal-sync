@@ -19,27 +19,6 @@ import { NpaCard } from "./npa-card";
 import { NpaListSkeleton } from "./npa-list-skeleton";
 import { SearchForm } from "./search-form";
 
-// const data = [
-//   {
-//     id: "1",
-//     name: "Право на проверку нормативных правовых актов",
-//     description:
-//       "Право на проверку нормативных правовых актов в соответствии с актами РФ и ФСТЭК от 25.01.2022 N 116-ФЗ «О проверке нормативных правовых актов»",
-//     sentensePart: "Право на проверку нормативных правовых актов",
-//     new: false,
-//     recommendations: "",
-//   },
-//   {
-//     id: "2",
-//     name: "Право на проверку нормативных правовых актов",
-//     description:
-//       "Право на проверку нормативных правовых актов в соответствии с актами РФ и ФСТЭК от 25.01.2022 N 116-ФЗ «О проверке нормативных правовых актов»",
-//     sentensePart: "Право на проверку нормативных правовых актов",
-//     new: false,
-//     recommendations: "",
-//   },
-// ];
-
 export function NpaList({
   description,
   title,
@@ -126,7 +105,6 @@ export function NpaList({
               initial={{ opacity: 0 }}
               exit={{ opacity: 0 }}
               key={"npa-list"}
-              className=""
             >
               <ul className="grid grid-cols-1 gap-5 2xl:grid-cols-2">
                 {data
