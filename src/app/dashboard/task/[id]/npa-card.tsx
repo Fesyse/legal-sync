@@ -80,38 +80,6 @@ export function NpaCard({
 
           <div className="flex items-start justify-between">
             <CardTitle className="text-xl font-bold">{name}</CardTitle>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  onClick={() => getRecommendations()}
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8"
-                >
-                  <MoreVertical className="h-4 w-4" />
-                  <span className="sr-only">Показать рекомендации</span>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent side="right" align="start" className="w-80">
-                <div className="space-y-2">
-                  <h4 className="mb-4 font-medium">Полные рекомендации</h4>
-                  {detailRecommendations ? (
-                    <ul className="list-disc">
-                      <TypingAnimation
-                        duration={30}
-                        className="text-foreground/70 p-0 text-sm leading-5 font-normal"
-                      >
-                        {detailRecommendations}
-                      </TypingAnimation>
-                    </ul>
-                  ) : (
-                    <p className="text-foreground/60 text-center text-xs">
-                      Мы не нашли больше рекомандаций. Ваше ТЗ отличное!
-                    </p>
-                  )}
-                </div>
-              </PopoverContent>
-            </Popover>
           </div>
           <CardDescription className="mt-2">
             {isRecommendationsOpen
