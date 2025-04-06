@@ -95,7 +95,7 @@ export function UserNav({ className }: UserNavProps) {
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
             <Link href="/dashboard" className="flex items-center">
               <LayoutGrid className="text-muted-foreground mr-3 h-4 w-4" />
-              Панель управления
+              Дашборд
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>

@@ -19,7 +19,7 @@ export const useSidebarNav = () => {
   return {
     navMain: [
       {
-        title: "Панель управления",
+        title: "Дашборд",
         icon: LayoutDashboard,
         items: [
           {
